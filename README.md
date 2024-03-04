@@ -1,1 +1,1 @@
-# JIMP2
+# Oszczędny Program Analizujący Labirynt
