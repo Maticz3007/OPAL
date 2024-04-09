@@ -1,3 +1,4 @@
+// v2 (otwarcie pliku tylko raz w trybie od odczytu i zapisu, skakanie po nim aby odczytywac i zapisywac w odpowiednich miejscach)
 #include "queue_BFS.h"
 #include "config.h"
 #include<stdlib.h>

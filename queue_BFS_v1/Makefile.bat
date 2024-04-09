@@ -1,1 +1,0 @@
-"C:\Users\jasrz\Desktop\MinGW64\bin\gcc.exe" -Wall --pedantic -ggdb queue_BFS_tester.c queue_BFS.c -o queue_BFS_tester.exe

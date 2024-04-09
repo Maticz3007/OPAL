@@ -1,3 +1,4 @@
+// v1 (proba otwarcia tego samego pliku w 2 roznych miejscach i trybach, aby raz odczytywac a raz zapisywac - NIE UDALO SIE)
 #ifndef QUEUE_BFS_IS_INCLUDED
 #define QUEUE_BFS_IS_INCLUDED
 
