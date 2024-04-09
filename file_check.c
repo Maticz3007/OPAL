@@ -5,21 +5,26 @@
 #include "file_check.h"
 
 
-short int sprawdz_dostep_do_odczytu(FILE * maze_input)
+short int sprawdz_dostep_do_odczytu(char * plik_wejsciowy)
 {
+    FILE * maze_input = fopen(plik_wejsciowy, "r");
     if(maze_input==NULL) return 10;
     else return 0;
+    fclose(maze_input);
 }
 
-short int sprawdz_dostep_do_zapisu(FILE * maze_output)
+short int sprawdz_dostep_do_zapisu(char * plik_wyjsciowy)
 {
+    FILE * maze_output = fopen(plik_wyjsciowy, "r");
     if(maze_output==NULL) return 20;
     else return 0;
+    fclose(maze_output);
 }
 
 
-short int sprawdz_format_labiryntu(FILE * maze_input)
+short int sprawdz_format_labiryntu(char * plik_wejsciowy)
 {
+    FILE * maze_input = fopen(plik_wejsciowy, "r");
     short int wejscia = 0;
     short int wyjscia = 0;
     short int obecny_x = 0;
@@ -82,5 +87,6 @@ short int sprawdz_format_labiryntu(FILE * maze_input)
     printf("P: %d, %d\n", x_poczatek, y_poczatek); //kolumna, wiersz
     printf("K: %d, %d\n", x_koniec, y_koniec);
     printf("Rozmiary pliku: %d, %d\n", szerokosc, wysokosc);
+    fclose(maze_input);
     return 0;
 }
