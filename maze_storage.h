@@ -3,7 +3,11 @@
 
 #include<stdint.h> // uint8_t zajmujacy 1 bajt
 
-#define MAX_MAZE_STORAGE 100 // do zmiany
+#define MAX_MAZE_STORAGE 393217 // okolo, moze wiecej lub mniej
+// 393217 * 8 == 3145736 > 3145728 == 1024*1024*3
+
+//#define MAX_MAZE_STORAGE 10000
+//#define MAX_MAZE_STORAGE 1
 
 typedef struct {
     short int a;
@@ -20,7 +24,6 @@ typedef struct {
     uint8_t chunk[MAX_MAZE_STORAGE];
     // na potrzeby implementacji:
     short int _l_Pol_w_chunku; // ustawiane przez MazeStorage_inicjuj
-    short int _a_b; // max(MazeStorage.a,MazeStorage.b) zwiekszone minimalnie tak, aby (MazeStorage._a_b % MazeStorage.l_chunkow == 0), tez ustawiane przy inicjacji
 } MazeStorage;
 // Pierwsze Pole całego labiryntu ma wspolrzedne (1,1), a ostatnie (MazeStorage.a,MazeStorage.b)
 // Pierwszy chunk ma wspolrzedne (1,1), a ostatni (MazeStorage.l_chunkow, MazeStorage.l_chunkow)
@@ -89,13 +92,19 @@ void MazeStorage_wyczysc();
 // (1,6) (2,6) (3,6)|(4,6) (5,6) (6,6)
 // Pole (5,3) zostanie przeksztalcone na indeks 7, tak samo jak Pole (2,3)
 // Funkcja zaklada, ze Pole P istnieje
-short _MazeStorage_transformacja_wspolrzednych_Pola(Pole P);
+int _MazeStorage_transformacja_wspolrzednych_Pola(Pole P);
 
 // Przeksztalca pare (numer_Pola, ktory_bit) -> (idx, nb)
 // gdzie:
 // idx - indeks Pola w MazeStorage.chunk
 // nb  - numer bitu dla indeksu idx MazeStorage.chunk, tzn. MazeStorage.chunk[idx][nb] to ktory_bit Pola numer_Pola
 // idx zostanie przekazane do numer_Pola, nb do ktory_bit
-void _MazeStorage_transformacja_3(short int * numer_Pola, short int * ktory_bit);
+void _MazeStorage_transformacja_3(int * numer_Pola, short int * ktory_bit);
+
+// DEBUG: wypisuje MazeStorage
+// format:
+// 1 - podzial na bajty
+// 2 - podzial na l_bitow
+void _MazeStorage_wypisz(short int format);
 
 #endif // MAZE_STORAGE_IS_INCLUDED
