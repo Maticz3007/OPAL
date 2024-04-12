@@ -5,23 +5,21 @@
 #include <string.h>
 #include "file_check.h"
 #include "RLE_decompressor.h"
-
+#include "chunkenizer.h"
 char * extension_reader(const char *s)
 {
     size_t length = strlen(s);
-
     return(char*)(length<4 ? s : s+length-4);
 }
 
 int main(int argc, char ** argv){
-    FILE * plik_wejsciowy = NULL;
-    FILE * plik_wyjsciowy = NULL;
+    WynikLabiryntu wynik;
     char * m_filepath = NULL;
     char * r_filepath = NULL;
     int c;
     opterr = 0;
+    short int error_flag=0;
     short int help_flag=0;
-
     while((c = getopt(argc, argv, "hm:r:")) != -1)
         switch (c)
         {
@@ -46,8 +44,8 @@ int main(int argc, char ** argv){
                 }
                 else
                     fprintf (stderr,
-                             "Unknown option character `\\x%x'.\n",
-                             optopt);  //potem przetestuje i dam odpowiednie komentarze
+                             "Nieprawidłowy argument.`\\x%x'.\n",
+                             optopt);  //potem przetestuję i dam odpowiednie komentarze
                 return 1;
             default:
                 abort();
@@ -57,30 +55,32 @@ int main(int argc, char ** argv){
         printf("tutaj będzie jakaś pomoc");
         return -12;
     }
-
-    char ext[5];
+    char ext[5] = {};
     char *extension = extension_reader(r_filepath);
     memcpy(ext, extension, 4);
-    printf("%s", ext);
-
-
+    //printf("%s\n", ext);
     if(m_filepath != NULL)
     {
-        plik_wyjsciowy = fopen(m_filepath, "a");
-        sprawdz_dostep_do_zapisu(plik_wyjsciowy);
+        sprawdz_dostep_do_zapisu(m_filepath);
     }
-
     if (strcmp(ext, ".bin") == 0)
     {
         RLE_decompression(r_filepath);
-        strcpy(r_filepath, "C:\\Users\\Mateusz\\Desktop\\untitled\\maze_test.txt");
+        strcpy(r_filepath, "maze_binary_source.txt");
     }
-    printf("%s\n", r_filepath);
-    plik_wejsciowy = fopen(r_filepath, "r");
-    sprawdz_dostep_do_odczytu(plik_wejsciowy);
-    sprawdz_format_labiryntu(plik_wejsciowy);
+    // printf("%s\n", r_filepath);
+    extension = extension_reader(r_filepath);
+    memcpy(ext, extension, 4);
+    if (strcmp(ext, ".txt") != 0) return -11; //nieprawidłowy plik na wejściu
+    error_flag = sprawdz_dostep_do_odczytu(r_filepath);
+    if(error_flag==10) return 10; //anty-segfault
+    wynik = sprawdz_format_labiryntu(r_filepath);
 
-
+    podglad_bin(1,wynik.szerokosc, wynik.wysokosc,r_filepath);
+    podziel_labirynt(3, wynik.szerokosc, wynik.wysokosc,r_filepath);
+    delete_chunks(32, "test", "txt");
+    delete_chunks(32, "output", "bin");
+    //podziel_tekstowy(2, (wynik.szerokosc*2+1), (wynik.wysokosc*2+1), r_filepath);
 
 
 }
