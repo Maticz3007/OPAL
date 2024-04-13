@@ -32,6 +32,8 @@ short int podziel_labirynt(short int chunki , short int a, short int b, char * p
     int index=0;
     int output_value=0;
     char o_filename[100];
+    char buf[chunki][80960]={}; //bez tablicy 2D zapis się mocno psuł
+    //setbuf(maze_input, buf);
     if(a<b)
     {
         rozmiar_chunka = b/chunki;
@@ -45,8 +47,9 @@ short int podziel_labirynt(short int chunki , short int a, short int b, char * p
 
     for(int i=0; i<chunki; i++)
     {
-        sprintf(t_filename, "%s_%d.txt", "test", i);
-        pliki[i] = fopen(t_filename, "w"); //numerowane od zera (na razie)
+        sprintf(t_filename, "%s_%d_%d.txt", "test", i+1, 1);
+        pliki[i] = fopen(t_filename, "w");
+        setbuf(pliki[i], buf[i]);
     }
     while((temp = fgetc(maze_input)) != EOF)
     {
@@ -80,7 +83,7 @@ short int podziel_labirynt(short int chunki , short int a, short int b, char * p
                             else fprintf(pliki[current_stream], "%c", '0');
                             if(buffer[i+a] == ' ') fprintf(pliki[current_stream], "%c", '1');
                             else fprintf(pliki[current_stream], "%c", '0');
-                            fprintf(pliki[current_stream], "%c", '0');
+                            fprintf(pliki[current_stream], "%c", '0'); //tutaj można dać pętlę for jeśli potrzebne będzie więcej niż 3 bity na pole
                             //fprintf(pliki[current_stream], "%c", ' ');
                             split_counter++;
                             //printf("%d,%d ", split_counter, current_stream);
@@ -89,6 +92,7 @@ short int podziel_labirynt(short int chunki , short int a, short int b, char * p
                             fprintf(pliki[current_stream], "%s", "000");
                         split_counter=0;
                         current_stream=0;
+                        //fprintf(pliki[current_stream], "%c", '\n');
                         lines_in_chunk++;
                         if(lines_in_chunk==rozmiar_chunka && lines_in_chunk+rozmiar_chunka*file_counter!=chunki*rozmiar_chunka)
                         {
@@ -98,11 +102,11 @@ short int podziel_labirynt(short int chunki , short int a, short int b, char * p
                                 fclose(pliki[j]);
                             for(int j=0; j<chunki; j++)
                             {
-                                sprintf(t_filename, "%s_%d.txt", "test", file_counter*chunki+j);
-                                pliki[j] = fopen(t_filename, "w"); //numerowane od zera (na razie)
+                                sprintf(t_filename, "%s_%d_%d.txt", "test", j+1, file_counter+1);
+                                pliki[j] = fopen(t_filename, "w");
+                                setbuf(pliki[j], buf[j]);
                             }
                         }
-                        //fprintf(maze_output, "%c", '\n');
                     }
                 }
             }
@@ -121,14 +125,27 @@ short int podziel_labirynt(short int chunki , short int a, short int b, char * p
     for(int i=0; i<chunki; i++)
         fclose(pliki[i]);
     fclose(maze_input);
-    for(int i=0; i<chunki*chunki; i++)
+    for(int i=0; i<chunki; i++)
     {
-        sprintf(t_filename, "%s_%d.txt", "test", i);
-        sprintf(o_filename, "%s_%d.bin", "output", i);
+        for(int j=0; j<chunki; j++)
+        {
+        sprintf(t_filename, "%s_%d_%d.txt", "test", j+1, i+1);
+        sprintf(o_filename, "%s_%d_%d.bin", "output", j+1, i+1);
         index=0;
         output_value=0;
         input=fopen(t_filename, "r");
+        if(input==NULL) continue;
+        setbuf(input, buf[0]);
+        fseek(input, 0, SEEK_END);
+        if(ftell(input)==0)
+        {
+            fclose(input);
+            remove(t_filename);
+            continue; // aby nie tworzyło pustego outputu, choć kasować nie musi koniecznie w tym momencie
+        }
+        fseek(input, 0, SEEK_SET);
         output=fopen(o_filename, "wb");
+        setbuf(output, buf[0]);
         while((temp = fgetc(input)) != EOF)
         {
             if(temp=='1') output_value += 1 << (7-index);
@@ -142,16 +159,28 @@ short int podziel_labirynt(short int chunki , short int a, short int b, char * p
         }
         fwrite(&output_value, 1, 1, output);
         fclose(input);
-        fclose(output);
+        fclose(output);           
+        }
     }
     return rozmiar_chunka;
 }
 
 
+void delete_chunks(short int chunki, char * file_name, char * extension)
+{
+    char d_filepath[100];
+    for(int i=0; i<chunki; i++)
+        for(int j=0; j<chunki; j++)
+        {
+            sprintf(d_filepath, "%s_%d_%d.%s", file_name, j, i, extension);
+            remove(d_filepath);
+        }
+}
+
 //poniższe funkcje były tworzone jako prototypy/testy, są tutaj celem ułatwienia testów
 //pierwsza zamienia plik z labiryntem na reprezentację binarną w formie tekstowej (jeden wielki chunk, pomimo argumentu chunki)
 //druga kroi plik na kawałki 
-//są w nich jakieś memory leaki, ale nie będą one wykorzystywane w programie "docelowo"
+//może są w nich jakieś memory leaki, ale nie będą one wykorzystywane w programie "docelowo"
 
 short int podglad_bin(short int chunki , short int a, short int b, char * plik_wejsciowy)
 {
@@ -180,8 +209,8 @@ short int podglad_bin(short int chunki , short int a, short int b, char * plik_w
                 if(((x_counter+y_counter)%2==1 && x_counter!=1))
                 {
                     //fprintf(maze_output, "%c", temp);
-                    printf("ok");
-                    printf("%c", temp);
+                    //printf("ok");
+                    //printf("%c", temp);
                     buffer[ok]=temp;
                     ok++;
                     if(ok==buffer_size)
@@ -203,16 +232,9 @@ short int podglad_bin(short int chunki , short int a, short int b, char * plik_w
 
         }
     }
+    fclose(maze_input);
+    fclose(maze_output);
     return 0;
-}
-void delete_chunks(short int chunki, char * file_name, char * extension)
-{
-    char d_filepath[100];
-    for(int i=0; i<chunki*chunki; i++)
-    {
-        sprintf(d_filepath, "%s_%d.%s", file_name, i, extension);
-        remove(d_filepath);
-    }
 }
 
 short int podziel_tekstowy(short int chunki , short int a, short int b, char * plik_wejsciowy)
