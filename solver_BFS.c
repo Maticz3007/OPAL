@@ -40,13 +40,13 @@ short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short i
         // Kolejnosc postepowania (inna niz na diagramie zmodyfikowana tak, aby nie wczytywac chunkow wiecej razy niz trzeba):
         // 1. Czy PoleD istnieje (powinno zawsze istniec)
         // 2. Czy PoleD jest w aktualnie wczytanym chunku (jesli nie to wczytaj)
-        // 3. Czy PoleD zostalo odwiedzone (nie powinno byc)
-        // 4. Sprawdzamy czy mozna isc do sasiadow Pola PoleD (najpierw z prawej, potem z dolu aby nie wczytywac chunkow wiecej razy niz trzeba)
-        // 5. PoleD zostaje odwiedzone
-        // 6. Ustawiamy skad doszlismy do Pola PoleD
-        // 7. Zapisujemy aktualnie wczytany chunk
-        // 8. Wczytujemy sasiadow Pola PoleD z prawej i dolu oraz sprawdzamy czy sa odwiedzeni
-        // 9. Sprawdzamy sasiadow Pola PoleD (z gory i z lewej, wymaga to wczytania chunkow z tymi Polami)
+        // (usunieto) Czy PoleD zostalo odwiedzone (nie powinno byc) - a jednak moze byc odwiedzone po raz drugi, jesli w tym samym momencie przyjdziemy do niego z 2 roznych miejsc
+        // 3. Sprawdzamy czy mozna isc do sasiadow Pola PoleD (najpierw z prawej, potem z dolu aby nie wczytywac chunkow wiecej razy niz trzeba)
+        // 4. PoleD zostaje odwiedzone
+        // 5. Ustawiamy skad doszlismy do Pola PoleD
+        // 6. Zapisujemy aktualnie wczytany chunk
+        // 7. Wczytujemy sasiadow Pola PoleD z prawej i dolu oraz sprawdzamy czy sa odwiedzeni
+        // 8. Sprawdzamy sasiadow Pola PoleD (z gory i z lewej, wymaga to wczytania chunkow z tymi Polami)
         if (!Pole_czy_istnieje(PoleD)) { // 1. Czy PoleD istnieje? Powinno zawsze istniec
             return 778;
         }
@@ -54,8 +54,9 @@ short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short i
             nie_udalo_sie = wczytaj_chunk_z_Polem(PoleD);
             if (nie_udalo_sie) return nie_udalo_sie;
         }
-        if (Pole_czy_odwiedzone(PoleD)) { // 3. PoleD powinno byc jeszcze nieodwiedzone
-            return 779;
+        if (Pole_czy_odwiedzone(PoleD)) { // PoleD powinno byc jeszcze nieodwiedzone - jednak nie, mozliwe ze zostanie odwiedzone w tym samym momencie z 2 roznych miejsc
+            //return 779;
+            continue; // wracamy na poczatek petli i ignorujemy to
         }
         // Sprawdzamy sasiednie Pola
         element.PoleP.a = PoleD.a;element.PoleP.b = PoleD.b;
