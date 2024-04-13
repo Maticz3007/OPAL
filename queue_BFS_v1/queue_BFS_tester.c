@@ -13,36 +13,36 @@ short int los(short int p, short int k) {
     if (rint > k) rint = k;
     return rint;
 }
-void test_wrzuc(kolejka * Q) {
-    kolejka_element element;
+void test_wrzuc(Kolejka * Q) {
+    KolejkaElement element;
     element.PoleD.a = los(1,100);element.PoleD.b = los(1,100);
     element.PoleP.a = los(1,100);element.PoleP.b = los(1,100);
     printf("Wrzucam ((%i,%i),(%i,%i))\n",element.PoleD.a,element.PoleD.b,element.PoleP.a,element.PoleP.b);
-    printf("kolejka_wrzuc:%i\n",kolejka_wrzuc(Q,element));
+    printf("Kolejka_wrzuc:%i\n",Kolejka_wrzuc(Q,element));
 }
-void test_zrzuc(kolejka * Q) {
-    kolejka_element element;
+void test_zrzuc(Kolejka * Q) {
+    KolejkaElement element;
     element.PoleD.a = 0;element.PoleD.b = 0;
     element.PoleP.a = 0;element.PoleP.b = 0;
-    printf("kolejka_zrzuc:%i\n",kolejka_zrzuc(Q,&element));
+    printf("Kolejka_zrzuc:%i\n",Kolejka_zrzuc(Q,&element));
     printf("Odczytalem ((%i,%i),(%i,%i))\n",element.PoleD.a,element.PoleD.b,element.PoleP.a,element.PoleP.b);
 }
-/*void test_zrzuc(kolejka * Q) {
-    printf("zrzuc:%i\n",kolejka_zrzuc(Q));
+/*void test_zrzuc(Kolejka * Q) {
+    printf("zrzuc:%i\n",Kolejka_zrzuc(Q));
 }*/
 
 int main(int argc, char ** argv) {
-    kolejka Q;
-    kolejka_inicjuj(&Q);
+    Kolejka Q;
+    Kolejka_inicjuj(&Q);
     srand(time(NULL));
-    char kolejka_plik[MAX_SCIEZKA];
-    //sprintf(kolejka_plik,KOLEJKA_FORMAT_SCIEZKI_PLIKU,(void *)(&Q));
-    //sprintf(kolejka_plik,KOLEJKA_FORMAT_SCIEZKI_PLIKU);
-    _kolejka_sciezka_do_pliku(&Q,kolejka_plik);
-    printf("sciezka do pliku:%s\n",kolejka_plik);
+    char Kolejka_plik[MAX_SCIEZKA];
+    //sprintf(Kolejka_plik,KOLEJKA_FORMAT_SCIEZKI_PLIKU,(void *)(&Q));
+    //sprintf(Kolejka_plik,KOLEJKA_FORMAT_SCIEZKI_PLIKU);
+    _Kolejka_sciezka_do_pliku(&Q,Kolejka_plik);
+    printf("sciezka do pliku:%s\n",Kolejka_plik);
     Q.tryb = 1; // Testujemy tryb z plikiem
-    //printf("%s\n",kolejka_sciezka);
-    printf("zrob plik:%i\n",_kolejka_zrob_plik(&Q));
+    //printf("%s\n",Kolejka_sciezka);
+    printf("zrob plik:%i\n",_Kolejka_zrob_plik(&Q));
     /*int i;
     for (i = 0;i < 100;i++) {
         switch (los(1,2)) {
@@ -60,6 +60,6 @@ int main(int argc, char ** argv) {
     test_zrzuc(&Q);
     test_zrzuc(&Q);
     test_zrzuc(&Q);
-    //printf("usun plik:%i\n",_kolejka_usun_plik(&Q));
+    //printf("usun plik:%i\n",_Kolejka_usun_plik(&Q));
     return 0;
 }
