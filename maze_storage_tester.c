@@ -6,6 +6,9 @@ int main(int argc, char ** argv) {
     //MazeStorage_inicjuj(3,1,1024,1024,1,1);
     //MazeStorage_inicjuj(3,1,10,10,1,1);
     //MazeStorage_inicjuj(3,1,1,1,1,1);
+
+    //MazeStorage_inicjuj(3,2,7,7,2,1);
+
     Pole P;
     // Ustawianie wszystkiego na 1
     /*short int a,b,ktory_bit;

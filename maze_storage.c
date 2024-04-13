@@ -159,6 +159,7 @@ void Pole_skad_doszedl(Pole * P) {
 }
 
 void MazeStorage_inicjuj(short int l_bitow, short int l_chunkow, short int a, short int b, short int chunk_a, short int chunk_b) {
+    // Tu nie sprawdzamy, czy podane do inicjacji dane maja sens!
     labirynt.l_bitow = l_bitow;
     labirynt.l_chunkow = l_chunkow;
     labirynt.a = a;
@@ -273,11 +274,12 @@ void _MazeStorage_wypisz(short int format) {
     short int a,b,ktory_bit;
     Pole P;
     short int l_wyp = 0;
+    printf("Chunk (%i,%i):\n",labirynt.chunk_a,labirynt.chunk_b);
     switch (format) {
         case 1:
-            for (b = 1;b <= labirynt.b;b++) {
+            for (b = 1;b <= labirynt._l_Pol_w_chunku;b++) {
                 P.b = b;
-                for (a = 1;a <= labirynt.a;a++) {
+                for (a = 1;a <= labirynt._l_Pol_w_chunku;a++) {
                     P.a = a;
                     for (ktory_bit = 1;ktory_bit <= labirynt.l_bitow;ktory_bit++) {
                         putc((int)(MazeStorage_odczytaj_bit(P,ktory_bit)+48),stdout);
@@ -293,9 +295,9 @@ void _MazeStorage_wypisz(short int format) {
             }
             break;
         case 2:
-            for (b = 1;b <= labirynt.b;b++) {
+            for (b = 1;b <= labirynt._l_Pol_w_chunku;b++) {
                 P.b = b;
-                for (a = 1;a <= labirynt.a;a++) {
+                for (a = 1;a <= labirynt._l_Pol_w_chunku;a++) {
                     P.a = a;
                     for (ktory_bit = 1;ktory_bit <= labirynt.l_bitow;ktory_bit++) {
                         putc((int)(MazeStorage_odczytaj_bit(P,ktory_bit)+48),stdout);
