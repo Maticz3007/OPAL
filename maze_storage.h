@@ -3,8 +3,11 @@
 
 #include<stdint.h> // uint8_t zajmujacy 1 bajt
 
-#define MAX_MAZE_STORAGE 393217 // okolo, moze wiecej lub mniej
+//#define MAX_MAZE_STORAGE 393217 // okolo, moze wiecej lub mniej aby przechowac caly labirynt na raz
 // 393217 * 8 == 3145736 > 3145728 == 1024*1024*3
+
+#define MAX_MAZE_STORAGE 98305 // jesli przyjmiemy ze chunk ma maksymalny rozmiar 512x512
+// 98305 * 8 == 786440 > 786432 == 512*512*3
 
 //#define MAX_MAZE_STORAGE 10000
 //#define MAX_MAZE_STORAGE 1
@@ -86,7 +89,7 @@ void MazeStorage_wyczysc();
 // (1,1) (2,1) (3,1)|(4,1) (5,1) (6,1)
 // (1,2) (2,2) (3,2)|(4,2) (5,2) (6,2)
 // (1,3) (2,3) (3,3)|(4,3) (5,3) (6,3)
-// -----------------|-----------------
+// -----------------+-----------------
 // (1,4) (2,4) (3,4)|(4,4) (5,4) (6,4)
 // (1,5) (2,5) (3,5)|(4,5) (5,5) (6,5)
 // (1,6) (2,6) (3,6)|(4,6) (5,6) (6,6)
