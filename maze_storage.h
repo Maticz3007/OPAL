@@ -24,10 +24,13 @@ typedef struct {
     short int b;
     short int chunk_a;
     short int chunk_b;
-    uint8_t chunk[MAX_MAZE_STORAGE];
+    uint8_t chunk[MAX_MAZE_STORAGE]; // pojedynczy chunk labiryntu
     // na potrzeby implementacji:
     short int _l_Pol_w_chunku; // ustawiane przez MazeStorage_inicjuj
 } MazeStorage;
+
+// MazeStorage przechowuje pojedynczy chunk labiryntu w MazeStorage.chunk
+
 // Pierwsze Pole całego labiryntu ma wspolrzedne (1,1), a ostatnie (MazeStorage.a,MazeStorage.b)
 // Pierwszy chunk ma wspolrzedne (1,1), a ostatni (MazeStorage.l_chunkow, MazeStorage.l_chunkow)
 
