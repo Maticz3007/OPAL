@@ -8,8 +8,6 @@
 //wychodzi z tego tona malloca tylko i wyłącznie bo otwieranie/zamykanie plików z niego korzysta
 //a jednak nie! ponieważ fwrite
 //usun_chunki (delete_chunks ale nazwę zmienimy potem) może wybrać co kasuje -> docelowo usuniemy .txt po utworzeniu .bin, a .bin jak program się skończy
-//na razie w mainie usuwa 32^2 chunków o podanej nazwie+rozszerzeniu, nalezy tam dać jakiś argument aby nie kasowało 90% plików których nie ma
-//nazwy (x,y chunków zamiast koljeno) będą niedługo
 short int podziel_labirynt(short int chunki , short int a, short int b, char * plik_wejsciowy)
 {
     FILE * maze_input = fopen(plik_wejsciowy, "r");
@@ -32,8 +30,8 @@ short int podziel_labirynt(short int chunki , short int a, short int b, char * p
     int index=0;
     int output_value=0;
     char o_filename[100];
-    char buf[chunki][80960]={}; //bez tablicy 2D zapis się mocno psuł
-    //setbuf(maze_input, buf);
+    //char buf[chunki+1][81920]={}; //bez tablicy 2D zapis się mocno psuł
+    //setbuf(maze_input, buf[0]);
     if(a<b)
     {
         rozmiar_chunka = b/chunki;
@@ -47,9 +45,9 @@ short int podziel_labirynt(short int chunki , short int a, short int b, char * p
 
     for(int i=0; i<chunki; i++)
     {
-        sprintf(t_filename, "%s_%d_%d.txt", "test", i+1, 1);
+        sprintf(t_filename, "%s_%d_%d.txt", "temp", i+1, 1);
         pliki[i] = fopen(t_filename, "w");
-        setbuf(pliki[i], buf[i]);
+        //setbuf(pliki[i], buf[i]);
     }
     while((temp = fgetc(maze_input)) != EOF)
     {
@@ -102,9 +100,9 @@ short int podziel_labirynt(short int chunki , short int a, short int b, char * p
                                 fclose(pliki[j]);
                             for(int j=0; j<chunki; j++)
                             {
-                                sprintf(t_filename, "%s_%d_%d.txt", "test", j+1, file_counter+1);
+                                sprintf(t_filename, "%s_%d_%d.txt", "temp", j+1, file_counter+1);
                                 pliki[j] = fopen(t_filename, "w");
-                                setbuf(pliki[j], buf[j]);
+                                //setbuf(pliki[j], buf[j]);
                             }
                         }
                     }
@@ -129,13 +127,13 @@ short int podziel_labirynt(short int chunki , short int a, short int b, char * p
     {
         for(int j=0; j<chunki; j++)
         {
-        sprintf(t_filename, "%s_%d_%d.txt", "test", j+1, i+1);
-        sprintf(o_filename, "%s_%d_%d.bin", "output", j+1, i+1);
+        sprintf(t_filename, "%s_%d_%d.txt", "temp", j+1, i+1);
+        sprintf(o_filename, "%d_%d.chunk", j+1, i+1);
         index=0;
         output_value=0;
         input=fopen(t_filename, "r");
         if(input==NULL) continue;
-        setbuf(input, buf[0]);
+        //setbuf(input, buf[1]);
         fseek(input, 0, SEEK_END);
         if(ftell(input)==0)
         {
@@ -145,7 +143,7 @@ short int podziel_labirynt(short int chunki , short int a, short int b, char * p
         }
         fseek(input, 0, SEEK_SET);
         output=fopen(o_filename, "wb");
-        setbuf(output, buf[0]);
+        //setbuf(output, buf[0]);
         while((temp = fgetc(input)) != EOF)
         {
             if(temp=='1') output_value += 1 << (7-index);
@@ -166,16 +164,28 @@ short int podziel_labirynt(short int chunki , short int a, short int b, char * p
 }
 
 
-void delete_chunks(short int chunki, char * file_name, char * extension)
+void delete_chunks_bin(short int chunki)
 {
-    char d_filepath[100];
+    char d_filename[100];
     for(int i=0; i<chunki; i++)
         for(int j=0; j<chunki; j++)
         {
-            sprintf(d_filepath, "%s_%d_%d.%s", file_name, j, i, extension);
-            remove(d_filepath);
+            sprintf(d_filename, "%d_%d.chunk", j+1, i+1);
+            remove(d_filename);
         }
 }
+void delete_chunks_temp(short int chunki)
+{
+    char d_filename[100];
+    for(int i=0; i<chunki; i++)
+        for(int j=0; j<chunki; j++)
+        {
+            sprintf(d_filename, "%s_%d_%d.txt", "temp", j+1, i+1);
+            remove(d_filename);
+        }
+}
+
+
 
 //poniższe funkcje były tworzone jako prototypy/testy, są tutaj celem ułatwienia testów
 //pierwsza zamienia plik z labiryntem na reprezentację binarną w formie tekstowej (jeden wielki chunk, pomimo argumentu chunki)

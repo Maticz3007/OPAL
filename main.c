@@ -6,6 +6,9 @@
 #include "file_check.h"
 #include "RLE_decompressor.h"
 #include "chunkenizer.h"
+#include "chunk_manager.h"
+#include "maze_storage.h"
+
 char * extension_reader(const char *s)
 {
     size_t length = strlen(s);
@@ -75,12 +78,13 @@ int main(int argc, char ** argv){
     error_flag = sprawdz_dostep_do_odczytu(r_filepath);
     if(error_flag==10) return 10; //anty-segfault
     wynik = sprawdz_format_labiryntu(r_filepath);
-
-    podglad_bin(1,wynik.szerokosc, wynik.wysokosc,r_filepath);
-    podziel_labirynt(3, wynik.szerokosc, wynik.wysokosc,r_filepath);
-    delete_chunks(32, "test", "txt");
-    delete_chunks(32, "output", "bin");
+    delete_chunks_bin(100);
+    delete_chunks_temp(100);
+    //podglad_bin(1,wynik.szerokosc, wynik.wysokosc,r_filepath);
+    podziel_labirynt(1, wynik.szerokosc, wynik.wysokosc,r_filepath);
     //podziel_tekstowy(2, (wynik.szerokosc*2+1), (wynik.wysokosc*2+1), r_filepath);
-
-
+    MazeStorage_inicjuj(3, 1, 5, 5, 1, 1);
+    wczytaj_chunk_o_wspolrzednych(1, 1);
+    // for(int i=0; i<98305; i++)
+    // printf("%x ", labirynt.chunk[i]);
 }
