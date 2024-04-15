@@ -28,9 +28,8 @@ short int wypisz_liste_krokow(FILE * plik_wejsciowy, FILE * plik_wyjsciowy, shor
     return 0;
 }
 
-unsigned int _sprawdz_dlugosc_sciezki(Pole wejscie, Pole wyjscie)
-{
-    return 3222;
+unsigned int _sprawdz_dlugosc_sciezki(Pole wejscie, Pole wyjscie) {
+    return 1;
 } // Jeszcze nie zaimplementowane
 
 short int _wypisz_liste_krokow_tekstowo(FILE * plik_wyjsciowy, Pole wejscie, Pole wyjscie) {
@@ -40,10 +39,10 @@ short int _wypisz_liste_krokow_tekstowo(FILE * plik_wyjsciowy, Pole wejscie, Pol
     Pole przy_wyjsciu = _zwroc_Pole_przy_skrajnym_Polu(wyjscie);
     short int akt_d = 0; // aktualna sciezka TYLKO w 1 kierunku
     // akt_d nie moze przekroczyc max(labirynt.a, labirynt.b)
-    uint8_t aktualny_kierunek, nowy_kierunek;short int wzglednosc_kierunkow;
+    uint8_t poprzedni_kierunek, nowy_kierunek;short int wzglednosc_kierunkow;
     PoleP = wejscie;
     PoleD = przy_wejsciu;
-    aktualny_kierunek = _kierunek_z_Odcinka(PoleP, PoleD); // Zaczynamy na wejsciu patrzac w tym kierunku
+    poprzedni_kierunek = _kierunek_z_Odcinka(PoleP, PoleD); // Zaczynamy na wejsciu patrzac w tym kierunku
     fprintf(plik_wyjsciowy,"START\n");
     // Przechodzimy z Pola wejsciowego do Pola przy wejsciu
     akt_d++;
@@ -51,27 +50,32 @@ short int _wypisz_liste_krokow_tekstowo(FILE * plik_wyjsciowy, Pole wejscie, Pol
     while (PoleD.a != przy_wyjsciu.a || PoleD.b != przy_wyjsciu.b) {
         if (!Pole_czy_w_chunku(PoleD)) {
             nie_udalo_sie = wczytaj_chunk_z_Polem(PoleD);
-            if (nie_udalo_sie) return nie_udalo_sie;
+            if (nie_udalo_sie) return nie_udalo_sie; // w zasadzie powinno sie udac
         }
         // Wiemy juz, ze sciezka istnieje wiec nie musimy sprawdzac czy Pola sa odwiedzone
         PoleP.a = PoleD.a;PoleP.b = PoleD.b;
+        //printf("Do Pola (%i, %i)",PoleD.a,PoleD.b);
         Pole_skad_doszedl(&PoleD); // to powinno zadzialac bez problemow
+        //printf(" doszlismy z (%i, %i)\n",PoleD.a,PoleD.b);
         nowy_kierunek = _kierunek_z_Odcinka(PoleP, PoleD);
-        if (nowy_kierunek != aktualny_kierunek) {
-            wzglednosc_kierunkow = _wzglednosc_kierunkow(aktualny_kierunek, nowy_kierunek);
+        //printf("(poprzedni_k, nowy_k): (%c, %c)\n",poprzedni_kierunek,nowy_kierunek);
+        if (nowy_kierunek != poprzedni_kierunek) {
+            fprintf(plik_wyjsciowy, "FORWARD %i\n", akt_d);
+            akt_d = 1;
+            wzglednosc_kierunkow = _wzglednosc_kierunkow(poprzedni_kierunek, nowy_kierunek);
             switch (wzglednosc_kierunkow) {
                 case 1:
-                    fprintf(plik_wyjsciowy, "TURNLEFT");
+                    fprintf(plik_wyjsciowy, "TURNLEFT\n");
                     break;
                 case 0:
                     printf("Cos jest bardzo zle...\nNasz program cofa sie...\n");
+                    //abort();
                     break;
                 case -1:
-                    fprintf(plik_wyjsciowy, "TURNRIGHT");
+                    fprintf(plik_wyjsciowy, "TURNRIGHT\n");
                     break;
             }
-            fprintf(plik_wyjsciowy, "FORWARD %i\n", akt_d);
-            akt_d = 0;
+            poprzedni_kierunek = nowy_kierunek;
         } else akt_d++;
     }
     if (akt_d != 0) {
@@ -98,8 +102,11 @@ short int _wypisz_liste_krokow_binarnie(FILE * plik_wyjsciowy, Pole wejscie, Pol
     return 14312;
 } // Jeszcze nie zaimplementowane
 
-Pole _zwroc_Pole_przy_skrajnym_Polu(Pole skrajne)
-{
+Pole _zwroc_Pole_przy_skrajnym_Polu(Pole skrajne) {
+    if (skrajne.a == 0) skrajne.a++;
+    else if (skrajne.b == 0) skrajne.b++;
+    else if (skrajne.a > skrajne.b) skrajne.a--;
+    else skrajne.b--;
     return skrajne;
 }
 

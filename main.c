@@ -9,6 +9,7 @@
 #include "chunk_manager.h"
 #include "maze_storage.h"
 #include "solver_BFS.h"
+#include "solution_output.h"
 
 char * extension_reader(const char *s)
 {
@@ -89,6 +90,10 @@ int main(int argc, char ** argv){
     wyj.a=5;
     wyj.b=5;
     int jajo = rozwiaz_BFS(wej, wyj, 5, 5, maze_input);
+    rewind(maze_input);
+    wej.a--;wyj.a++;
+    wypisz_liste_krokow(maze_input, stdout, 0, wej, wyj);
+    fclose(maze_input);
     //rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short a, short b, char *plik_wejsciowy)
     _MazeStorage_wypisz(2);
     //MazeStorage_inicjuj(3, 1, 5, 5, 1, 1);
