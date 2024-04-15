@@ -118,7 +118,8 @@ short int Pole_ustaw_skad_doszedl(Pole D, Pole P) {
             MazeStorage_ustaw_bit(D, 1, 0);
             MazeStorage_ustaw_bit(D, 2, 0);
         } else return -61; // nie sasiaduja
-    } else return -61; // nie sasiaduja
+    } else if (P.a == 0 && P.b == 0) return 0; // na poczatku algorytmu przychodzimy z nikad
+    else return -61; // nie sasiaduja
     return 0;
 }
 
