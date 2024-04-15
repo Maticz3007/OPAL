@@ -37,26 +37,27 @@ short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short i
     nie_udalo_sie = wczytaj_chunk_z_Polem(element.PoleD); // zawsze musimy jeszcze wczytac chunk poczatkowy, podziel_labirynt tego nie robi
     if (nie_udalo_sie) return nie_udalo_sie;
     while (Q.lel > 0) {
-        _MazeStorage_wypisz(2);
-        _wypisz_Kolejke(Q);
+        //_MazeStorage_wypisz(2);
+        //_wypisz_Kolejke(Q);
         nie_udalo_sie = Kolejka_zrzuc(&Q, &element);
         if (nie_udalo_sie) return nie_udalo_sie;
         PoleD.a = element.PoleD.a;PoleD.b = element.PoleD.b;
         PoleP.a = element.PoleP.a;PoleP.b = element.PoleP.b;
         // Kolejnosc postepowania (inna niz na diagramie zmodyfikowana tak, aby nie wczytywac chunkow wiecej razy niz trzeba):
         // 1. Czy PoleD istnieje (powinno zawsze istniec)
-        // 2. Czy PoleD jest w aktualnie wczytanym chunku (jesli nie to wczytaj)
+        // 2. Czy PoleD jest w aktualnie wczytanym chunku (jesli nie to zapisz aktualny chunk i wczytaj nowy)
         // (usunieto) Czy PoleD zostalo odwiedzone (nie powinno byc) - a jednak moze byc odwiedzone po raz drugi, jesli w tym samym momencie przyjdziemy do niego z 2 roznych miejsc
         // 3. Sprawdzamy czy mozna isc do sasiadow Pola PoleD (najpierw z prawej, potem z dolu aby nie wczytywac chunkow wiecej razy niz trzeba)
         // 4. PoleD zostaje odwiedzone
         // 5. Ustawiamy skad doszlismy do Pola PoleD
-        // 6. Zapisujemy aktualnie wczytany chunk
-        // 7. Wczytujemy sasiadow Pola PoleD z prawej i dolu oraz sprawdzamy czy sa odwiedzeni
-        // 8. Sprawdzamy sasiadow Pola PoleD (z gory i z lewej, wymaga to wczytania chunkow z tymi Polami)
+        // 6. Wczytujemy sasiadow Pola PoleD z prawej i dolu oraz sprawdzamy czy sa odwiedzeni
+        // 7. Sprawdzamy sasiadow Pola PoleD (z gory i z lewej, wymaga to wczytania chunkow z tymi Polami)
         if (!Pole_czy_istnieje(PoleD)) { // 1. Czy PoleD istnieje? Powinno zawsze istniec
             return 778;
         }
-        if (!Pole_czy_w_chunku(PoleD)) { // 2. Czy PoleD jest w aktualnie wczytanym chunku (jesli nie to wczytaj)
+        if (!Pole_czy_w_chunku(PoleD)) { // 2. Czy PoleD jest w aktualnie wczytanym chunku (jesli nie to zapisz aktualny chunk i wczytaj nowy)
+            nie_udalo_sie = zapisz_chunk(); // zapisujemy aktualnie wczytany chunk przed wczytaniem kolejnego
+            if (nie_udalo_sie) return nie_udalo_sie;
             nie_udalo_sie = wczytaj_chunk_z_Polem(PoleD);
             if (nie_udalo_sie) return nie_udalo_sie;
         }
@@ -66,7 +67,7 @@ short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short i
         }
         // Sprawdzamy sasiednie Pola
         element.PoleP.a = PoleD.a;element.PoleP.b = PoleD.b;
-        // 4. najpierw z prawej, potem z dolu
+        // 3. najpierw z prawej, potem z dolu
         PoleT.a = PoleD.a+1;PoleT.b = PoleD.b; // PoleT == PoleE (Pole po prawej od PoleD)
         czy_mozna_w_prawo = 0;
         if (Pole_czy_istnieje(PoleT) && (PoleT.a != PoleP.a || PoleT.b != PoleP.b)) {
@@ -81,14 +82,12 @@ short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short i
                 czy_mozna_w_dol = 1;
             }
         }
-        nie_udalo_sie = Pole_ustaw_czy_odwiedzone(PoleD, 1); // 5. PoleD zostaje odwiedzone
+        nie_udalo_sie = Pole_ustaw_czy_odwiedzone(PoleD, 1); // 4. PoleD zostaje odwiedzone
         if (nie_udalo_sie) return nie_udalo_sie;
-        nie_udalo_sie = Pole_ustaw_skad_doszedl(PoleD, PoleP); // 6. Ustawiamy skad doszlismy do Pola PoleD
+        nie_udalo_sie = Pole_ustaw_skad_doszedl(PoleD, PoleP); // 5. Ustawiamy skad doszlismy do Pola PoleD
         if (nie_udalo_sie) return nie_udalo_sie;
-        printf("Doszedlem do Pola ");Pole_wypisz(PoleD);printf(" z Pola ");Pole_wypisz(PoleP);printf("\n");
-        nie_udalo_sie = zapisz_chunk(); // 7. Zapisujemy aktualnie wczytany chunk
-        if (nie_udalo_sie) return nie_udalo_sie;
-        // 8. Wczytujemy sasiadow Pola PoleD z prawej i dolu oraz sprawdzamy czy sa odwiedzeni
+        //printf("Doszedlem do Pola ");Pole_wypisz(PoleD);printf(" z Pola ");Pole_wypisz(PoleP);printf("\n");
+        // 6. Wczytujemy sasiadow Pola PoleD z prawej i dolu oraz sprawdzamy czy sa odwiedzeni
         PoleT.a = PoleD.a+1;PoleT.b = PoleD.b; // PoleT == PoleE (Pole po prawej od PoleD)
         if (czy_mozna_w_prawo) {
             if (!Pole_czy_w_chunku(PoleT)) {
@@ -113,7 +112,7 @@ short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short i
                 if (nie_udalo_sie) return nie_udalo_sie;
             }
         }
-        // 9. z gory i z lewej
+        // 7. z gory i z lewej
         PoleT.a = PoleD.a;PoleT.b = PoleD.b-1; // PoleT == PoleN (Pole nad PoleD)
         if (Pole_czy_istnieje(PoleT) && (PoleT.a != PoleP.a || PoleT.b != PoleP.b)) {
             if (!Pole_czy_w_chunku(PoleT)) {

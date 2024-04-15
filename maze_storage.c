@@ -102,28 +102,28 @@ short int Pole_ustaw_skad_doszedl(Pole D, Pole P) {
     if (P.a == D.a-1) {
         if (P.b == D.b) {
             // przyszlismy z lewej - 11
-            printf("Przyszlismy z lewej.\n");
+            //printf("Przyszlismy z lewej.\n");
             MazeStorage_ustaw_bit(D, 1, 1);
             MazeStorage_ustaw_bit(D, 2, 1);
         } else return -61; // nie sasiaduja
     } else if (P.a == D.a+1) {
         if (P.b == D.b) {
             // przyszlismy z prawej - 01
-            printf("Przyszlismy z prawej.\n");
+            //printf("Przyszlismy z prawej.\n");
             MazeStorage_ustaw_bit(D, 1, 0);
             MazeStorage_ustaw_bit(D, 2, 1);
         } else return -61; // nie sasiaduja
     } else if (P.b == D.b+1) {
         if (P.a == D.a) {
             // przyszlismy z dolu - 10
-            printf("Przyszlismy z dolu.\n");
+            //printf("Przyszlismy z dolu.\n");
             MazeStorage_ustaw_bit(D, 1, 1);
             MazeStorage_ustaw_bit(D, 2, 0);
         } else return -61; // nie sasiaduja
     } else if (P.b == D.b-1) {
         if (P.a == D.a) {
             // przyszlismy z gory - 00
-            printf("Przyszlismy z gory.\n");
+            //printf("Przyszlismy z gory.\n");
             MazeStorage_ustaw_bit(D, 1, 0);
             MazeStorage_ustaw_bit(D, 2, 0);
         } else return -61; // nie sasiaduja
