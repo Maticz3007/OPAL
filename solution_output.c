@@ -78,11 +78,31 @@ short int _wypisz_liste_krokow_tekstowo(FILE * plik_wyjsciowy, Pole wejscie, Pol
             poprzedni_kierunek = nowy_kierunek;
         } else akt_d++;
     }
+    // Prawie koniec sciezki
+    // Idziemy do wyjscia
+    nowy_kierunek = _kierunek_z_Odcinka(PoleD, wyjscie);
+    if (nowy_kierunek != poprzedni_kierunek) {
+        fprintf(plik_wyjsciowy, "FORWARD %i\n", akt_d);
+        akt_d = 1;
+        wzglednosc_kierunkow = _wzglednosc_kierunkow(poprzedni_kierunek, nowy_kierunek);
+        switch (wzglednosc_kierunkow) {
+            case 1:
+                fprintf(plik_wyjsciowy, "TURNLEFT\n");
+                break;
+            case 0:
+                printf("Cos jest bardzo zle...\nNasz program cofa sie...\n");
+                //abort();
+                break;
+            case -1:
+                fprintf(plik_wyjsciowy, "TURNRIGHT\n");
+                break;
+        }
+        poprzedni_kierunek = nowy_kierunek;
+    } else akt_d++;
     if (akt_d != 0) {
         fprintf(plik_wyjsciowy, "FORWARD %i\n", akt_d);
         akt_d = 0;
     }
-    // Koniec sciezki
     fprintf(plik_wyjsciowy,"STOP\n");
     return 0;
 }
