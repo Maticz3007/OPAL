@@ -16,7 +16,7 @@ void wyczysc_chunk()
     int pola_zaokr = (int) ceil(pola);
     char o_filename[100];
     //char buf[81920]; // -4 kB
-    sprintf(o_filename, "%s_%d_%d.bin", "output", labirynt.chunk_a, labirynt.chunk_b); //w specyfikacji jest inna nazwa
+    sprintf(o_filename, "%d_%d.chunk", labirynt.chunk_a, labirynt.chunk_b); 
     FILE * chunk = fopen(o_filename, "w");
     //setbuf(chunk, buf);
     char temp = 0;
@@ -35,7 +35,7 @@ short int zapisz_chunk()
     int pola_zaokr = (int) ceil(pola);
     char o_filename[100];
     //char buf[81920]; // -4 kB
-    sprintf(o_filename, "%s_%d_%d.bin", "output", labirynt.chunk_a, labirynt.chunk_b); //w specyfikacji jest inna nazwa
+    sprintf(o_filename, "%d_%d.chunk", labirynt.chunk_a, labirynt.chunk_b);
     FILE * chunk = fopen(o_filename, "w");
     //setbuf(chunk, buf);
     for(int i=0; i<pola_zaokr; i++)
@@ -54,7 +54,7 @@ short int wczytaj_chunk_o_wspolrzednych(short int a, short int b)
     int pola_zaokr = (int) ceil(pola);
     char o_filename[100];
     //char buf[81920]; // -4 kB
-    sprintf(o_filename, "%s_%d_%d.bin", "output", a, b); //w specyfikacji jest inna nazwa
+    sprintf(o_filename, "%d_%d.chunk", a, b);
     FILE * chunk = fopen(o_filename, "r");
     if(chunk==NULL) return 50;
     //setbuf(chunk, buf);
