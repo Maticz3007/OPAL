@@ -17,7 +17,7 @@ char * extension_reader(const char *s)
     return(char*)(length<4 ? s : s+length-4);
 }
 
-int main(int argc, char ** argv){
+int main(int argc, char ** argv) {
     WynikLabiryntu wynik;
     char * m_filepath = NULL;
     char * r_filepath = NULL;

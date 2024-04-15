@@ -44,7 +44,7 @@ unsigned int _sprawdz_dlugosc_sciezki(Pole wejscie, Pole wyjscie) {
         }
         if (!Pole_czy_w_chunku(PoleD)) {
             nie_udalo_sie = wczytaj_chunk_z_Polem(PoleD);
-            if (nie_udalo_sie) return nie_udalo_sie; // w zasadzie powinno sie udac
+            if (nie_udalo_sie) return 0; // w zasadzie powinno sie udac
         }
         if (!Pole_czy_odwiedzone(PoleD)) {
             if (calkowita_sciezka != 0) printf("solution_output: Cos jest bardzo nie tak, doszlismy do nieodwiedzonego Pola niebedacego przy wejsciu.\n");
