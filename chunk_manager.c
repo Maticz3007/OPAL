@@ -30,7 +30,6 @@ void wyczysc_chunk()
 
 short int zapisz_chunk()
 {
-    printf("Zapisuje chunk (%i, %i).\n", labirynt.chunk_a, labirynt.chunk_b);
      //zaokrąglenie w górę, ustala ilość bajtów w pliku
     double pola = (double)labirynt._l_Pol_w_chunku*labirynt._l_Pol_w_chunku * labirynt.l_bitow / 8;
     int pola_zaokr = (int) ceil(pola);
@@ -50,7 +49,6 @@ short int zapisz_chunk()
 
 short int wczytaj_chunk_o_wspolrzednych(short int a, short int b) 
 {
-    printf("Wczytuje chunk (%i, %i)", a, b);
     //zaokrąglenie w górę, ustala ilość bajtów w pliku
     double pola = (double)labirynt._l_Pol_w_chunku*labirynt._l_Pol_w_chunku * labirynt.l_bitow / 8;
     int pola_zaokr = (int) ceil(pola);
