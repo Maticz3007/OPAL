@@ -25,8 +25,8 @@ short int RLE_decompression(char * b_filename) {
     FILE * binary_input = fopen(b_filename, "rb");
     if (!binary_input)
     {
-        //printf("Problem z plikiem binarnym!"); //komunikaty na potem
-        return 20;
+        printf("Problem z plikiem binarnym!"); //komunikaty na potem
+        return 1;
     }
 
     fread(&buffer, 4, 1, binary_input);
