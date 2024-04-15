@@ -89,6 +89,7 @@ short int Pole_czy_mozna_w_dol(Pole P) {
 }
 
 short int Pole_ustaw_skad_doszedl(Pole D, Pole P) {
+    if (P.a == 0 && P.b == 0) return 0; // na poczatku algorytmu przychodzimy z nikad
     // Czy Pole P istnieje i czy Pole D istnieje
     if ((!Pole_czy_istnieje(P)) || (!Pole_czy_istnieje(D))) return -61;
     // Czy Pole D jest w aktualnie wczytanym chunku
@@ -118,8 +119,7 @@ short int Pole_ustaw_skad_doszedl(Pole D, Pole P) {
             MazeStorage_ustaw_bit(D, 1, 0);
             MazeStorage_ustaw_bit(D, 2, 0);
         } else return -61; // nie sasiaduja
-    } else if (P.a == 0 && P.b == 0) return 0; // na poczatku algorytmu przychodzimy z nikad
-    else return -61; // nie sasiaduja
+    } else return -61; // nie sasiaduja
     return 0;
 }
 

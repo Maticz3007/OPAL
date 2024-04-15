@@ -31,7 +31,7 @@ short int wypisz_liste_krokow(FILE * plik_wejsciowy, FILE * plik_wyjsciowy, shor
 unsigned int _sprawdz_dlugosc_sciezki(Pole wejscie, Pole wyjscie)
 {
     return 3222;
-}; // Jeszcze nie zaimplementowane
+} // Jeszcze nie zaimplementowane
 
 short int _wypisz_liste_krokow_tekstowo(FILE * plik_wyjsciowy, Pole wejscie, Pole wyjscie) {
     short int nie_udalo_sie;
@@ -86,22 +86,22 @@ short int _wypisz_liste_krokow_tekstowo(FILE * plik_wyjsciowy, Pole wejscie, Pol
 short int _przepisz_plik_do_sekcji_naglowkowej_rozwiazania(FILE * plik_wejsciowy, FILE * plik_wyjsciowy)
 {
     return 14312;
-}; // Jeszcze nie zaimplementowane
+} // Jeszcze nie zaimplementowane
 
 short int _przejdz_do_sekcji_naglowkowej_rozwiazania(FILE * plik_wyjsciowy)
 {
     return 14312;
-}; // Jeszcze nie zaimplementowane
+} // Jeszcze nie zaimplementowane
 
 short int _wypisz_liste_krokow_binarnie(FILE * plik_wyjsciowy, Pole wejscie, Pole wyjscie)
 {
     return 14312;
-}; // Jeszcze nie zaimplementowane
+} // Jeszcze nie zaimplementowane
 
 Pole _zwroc_Pole_przy_skrajnym_Polu(Pole skrajne)
 {
     return skrajne;
-};
+}
 
 uint8_t _kierunek_z_Odcinka(Pole P1, Pole P2) {
     if (P1.a == P2.a && P1.b-1 == P2.b) return 78;      // 01001110 (znak 'N')  - w gore
