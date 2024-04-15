@@ -161,3 +161,9 @@ short int _Kolejka_usun_plik(Kolejka * Q) {
     if (remove(Kolejka_plik) != 0) return 3241; // jesli plik zostanie usuniety wczesniej, to rowniez wywola to blad
     return 0;
 }
+
+void _wypisz_Kolejke(Kolejka Q) {
+    short int i;
+    for (i = Q.poczatek;i < Q.koniec;i++) printf("{(%i,%i),(%i,%i)} ", Q.kol[i].PoleD.a, Q.kol[i].PoleD.b, Q.kol[i].PoleP.a, Q.kol[i].PoleP.b);
+    printf("\n");
+}

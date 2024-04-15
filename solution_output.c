@@ -105,7 +105,7 @@ Pole _zwroc_Pole_przy_skrajnym_Polu(Pole skrajne)
 
 uint8_t _kierunek_z_Odcinka(Pole P1, Pole P2) {
     if (P1.a == P2.a && P1.b-1 == P2.b) return 78;      // 01001110 (znak 'N')  - w gore
-    else if (P1.a-1 == P2.a && P1.b == P2.b) return 69; // 01000101 (znak 'E')  - w prawo
+    else if (P1.a+1 == P2.a && P1.b == P2.b) return 69; // 01000101 (znak 'E')  - w prawo
     else if (P1.a == P2.a && P1.b+1 == P2.b) return 83; // 01010011 (znak 'S')  - w dol
     else if (P1.a-1 == P2.a && P1.b == P2.b) return 87; // 01010111 (znak 'W')  - w lewo
     else return 0;                                      // 00000000 (znak NULL) - P1 i P2 nie sasiaduja ze soba

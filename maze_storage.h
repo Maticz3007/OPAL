@@ -49,6 +49,8 @@ typedef struct {
 
 extern MazeStorage labirynt; // zdefiniowane w maze_storage.c
 
+void Pole_wypisz(Pole P);
+
 short int Pole_czy_istnieje(Pole P);
 
 short int Pole_czy_w_chunku(Pole P);

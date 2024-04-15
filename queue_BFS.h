@@ -6,7 +6,7 @@
 #include "config.h" // TEMP_DIR
 #include<stdio.h> // FILE
 
-#define MAX_KOLEJKA 50
+#define MAX_KOLEJKA 1000 // tymczasowo
 
 //#define KOLEJKA_SCIEZKA TEMP_DIR - uzywajmy po prostu funkcji pomocniczej _Kolejka_sciezka_do_pliku oraz sciezki TEMP_DIR
 #define KOLEJKA_FORMAT_SCIEZKI_PLIKU "%sKolejka%p.queue_BFS" // Trzeba jeszcze dopisac sciezke i (void *)Q dla kolejki Q
@@ -49,5 +49,7 @@ void _Kolejka_sciezka_do_pliku(Kolejka * Q, char * zwrocona_sciezka);
 short int _Kolejka_zrob_plik(Kolejka * Q);
 
 short int _Kolejka_usun_plik(Kolejka * Q);
+
+void _wypisz_Kolejke(Kolejka Q);
 
 #endif // QUEUE_BFS_IS_INCLUDED
