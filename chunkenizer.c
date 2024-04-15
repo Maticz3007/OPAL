@@ -8,9 +8,9 @@
 //wychodzi z tego tona malloca tylko i wyłącznie bo otwieranie/zamykanie plików z niego korzysta
 //a jednak nie! ponieważ fwrite
 //usun_chunki (delete_chunks ale nazwę zmienimy potem) może wybrać co kasuje -> docelowo usuniemy .txt po utworzeniu .bin, a .bin jak program się skończy
-short int podziel_labirynt(short int l_bitow, short int chunki , short int a, short int b, char * plik_wejsciowy)
+short int podziel_labirynt(short int l_bitow, short int chunki , short int a, short int b, FILE * maze_input)
 {
-    FILE * maze_input = fopen(plik_wejsciowy, "r");
+    //FILE * maze_input = fopen(plik_wejsciowy, "r");
     FILE * pliki[chunki];
     FILE * input;
     FILE * output;
@@ -122,7 +122,7 @@ short int podziel_labirynt(short int l_bitow, short int chunki , short int a, sh
     }
     for(int i=0; i<chunki; i++)
         fclose(pliki[i]);
-    fclose(maze_input);
+    //fclose(maze_input);
     for(int i=0; i<chunki; i++)
     {
         for(int j=0; j<chunki; j++)

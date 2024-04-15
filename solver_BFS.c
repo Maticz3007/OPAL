@@ -1,7 +1,8 @@
 #include "solver_BFS.h"
+#include "maze_storage.h"
 
 //short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu); - musimy znac wymiary labiryntu, aby go podzielic i zainicjowac MazeStorage
-short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short int b, char * plik_wejsciowy) {
+short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short int b, FILE * plik_wejsciowy) {
     // a - liczba kolumn labiryntu, b - liczba wierszy labiryntu, plik_wejsciowy - plik do podzialu na chunki
 
     // Tymczasowy sposob podzialu (pewnie mozliwe sa wieksze chunki):
@@ -9,6 +10,7 @@ short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short i
     // jesli 512 < max(a,b) <= 1024 : podziel na 4 chunki
     // jesli 1024 < max(a,b) <= 1536 : podziel na 9 chunkow
     // na razie wiekszych nie wspieramy
+    
     short int max_a_b = a;short int l_chunkow; // l_chunkow to pierwiastek z liczby chunkow
     if (b > max_a_b) max_a_b = b;
     if (max_a_b <= 512) l_chunkow = 1;
@@ -18,7 +20,7 @@ short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short i
     // Ta wersja algorytmu rozwiazujacego wykorzystuje 3 bity na Pole
     MazeStorage_inicjuj(3, l_chunkow, a, b, 1, 1); // na pewno chunk (1,1) istnieje
     podziel_labirynt(3, l_chunkow, a, b, plik_wejsciowy);
-
+    //_MazeStorage_wypisz(2); 
     // Mniej optymalna wersja algorytmu, ale z wieksza pewnoscia ze zadziala
     // Kolejka bedzie potrzebowala pewnie kilka razy wiecej elementow niz max(a,b) - to samo Pole moze zostac wrzucone wiecej niz raz
 
@@ -33,6 +35,7 @@ short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short i
     nie_udalo_sie = Kolejka_wrzuc(&Q, element);
     if (nie_udalo_sie) return nie_udalo_sie;
     while (Q.lel > 0) {
+        _MazeStorage_wypisz(2);
         nie_udalo_sie = Kolejka_zrzuc(&Q, &element);
         if (nie_udalo_sie) return nie_udalo_sie;
         PoleD.a = element.PoleD.a;PoleD.b = element.PoleD.b;
