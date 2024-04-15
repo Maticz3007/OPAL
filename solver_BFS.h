@@ -7,7 +7,7 @@
 #include "queue_BFS.h"     // Kolejka_inicjuj, Kolejka_wrzuc, Kolejka_zrzuc, ...
 
 //short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu); - musimy znac wymiary labiryntu i plik, w ktorym jest przechowywany, aby go podzielic i zainicjowac MazeStorage
-short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short int b, FILE * plik_wejsciowy);
+short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short int b, char * plik_wejsciowy);
 // a - liczba kolumn labiryntu, b - liczba wierszy labiryntu, plik_wejsciowy - plik do podzialu na chunki
 
 //short int Pole_ustaw_czy_mozna_w_prawo(Pole P); - przeniesione do modulu maze_storage

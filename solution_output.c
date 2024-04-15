@@ -1,10 +1,11 @@
 #include "solution_output.h"
+#include <stdio.h>
 
 //short int wypisz_liste_krokow(FILE * plik_wejsciowy);
 short int wypisz_liste_krokow(FILE * plik_wejsciowy, FILE * plik_wyjsciowy, short int tryb, Pole wejscie, Pole wyjscie) {
     short int nie_udalo_sie;
-    unsigned int dl_sciezki = _sprawdz_dlugosc_sciezki(Pole wejscie, Pole wyjscie);
-    if (dl_sciezki == -1) return 435 // Sciezka nie istnieje!
+    unsigned int dl_sciezki = _sprawdz_dlugosc_sciezki(wejscie, wyjscie);
+    if (dl_sciezki == -1) return 435; // Sciezka nie istnieje!
     switch (tryb) {
         case 0:
             nie_udalo_sie = _wypisz_liste_krokow_tekstowo(plik_wyjsciowy, wejscie, wyjscie);
@@ -17,7 +18,7 @@ short int wypisz_liste_krokow(FILE * plik_wejsciowy, FILE * plik_wyjsciowy, shor
             if (nie_udalo_sie) return nie_udalo_sie;
             break;
         case 2:
-            nie_udalo_sie = _przejdz_do_sekcji_naglowkowej_rozwiazania(plik_wejsciowy, plik_wyjsciowy);
+            nie_udalo_sie = _przejdz_do_sekcji_naglowkowej_rozwiazania(plik_wejsciowy);
             if (nie_udalo_sie) return nie_udalo_sie;
             nie_udalo_sie = _wypisz_liste_krokow_binarnie(plik_wyjsciowy, wejscie, wyjscie);
             if (nie_udalo_sie) return nie_udalo_sie;
@@ -75,6 +76,7 @@ short int _wypisz_liste_krokow_tekstowo(FILE * plik_wyjsciowy, Pole wejscie, Pol
     }
     // Koniec sciezki
     fprintf(plik_wyjsciowy,"STOP\n");
+    return 0;
 }
 
 short int _przepisz_plik_do_sekcji_naglowkowej_rozwiazania(FILE * plik_wejsciowy, FILE * plik_wyjsciowy); // Jeszcze nie zaimplementowane

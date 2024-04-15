@@ -2,7 +2,7 @@
 #define SOLUTION_OUTPUT_IS_INCLUDED
 
 #include<stdint.h> // uint8_t zajmujacy 1 bajt
-
+#include<stdio.h>
 #include "maze_storage.h"  // Pole, Pole_czy_odwiedzone, Pole_skad_doszedl, ...
 #include "chunk_manager.h" // zapisz_chunk, wczytaj_chunk_z_Polem, ...
 
@@ -32,7 +32,7 @@ short int _przepisz_plik_do_sekcji_naglowkowej_rozwiazania(FILE * plik_wejsciowy
 
 // Przechodzi do sekcji naglowkowej rozwiazania, zakladajac ze plik_wyjsciowy
 // jest uchytem do wczesniej uzywanego pliku binarnego zawierajacego juz caly labirynt, ktory wskazuje na jego poczatek
-short int _przejdz_do_sekcji_naglowkowej_rozwiazania(FILE * plik_wyjsciowy);
+short int _przejdz_do_sekcji_naglowkowej_rozwiazania(FILE * plik_wejsciowy);
 
 // uchwyt plik_wyjsciowy powinien wksazywac na czesc "Sekcja nagłowkowa rozwiazania" przed wywolaniem funkcji
 // wypisuje cala sekcje rozwiazania do pliku wyjsciowego

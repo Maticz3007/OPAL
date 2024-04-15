@@ -12,7 +12,7 @@
 void wyczysc_chunk()
 {
     //zaokrąglenie w górę, ustala ilość bajtów w pliku
-    double pola = (double)labirynt._l_Pol_w_chunku*labirynt._l_Pol_w_chunku * 3 / 8;
+    double pola = (double)labirynt._l_Pol_w_chunku*labirynt._l_Pol_w_chunku * labirynt.l_bitow / 8;
     int pola_zaokr = (int) ceil(pola);
     char o_filename[100];
     //char buf[81920]; // -4 kB
@@ -31,7 +31,7 @@ void wyczysc_chunk()
 short int zapisz_chunk()
 {
      //zaokrąglenie w górę, ustala ilość bajtów w pliku
-    double pola = (double)labirynt._l_Pol_w_chunku*labirynt._l_Pol_w_chunku * 3 / 8;
+    double pola = (double)labirynt._l_Pol_w_chunku*labirynt._l_Pol_w_chunku * labirynt.l_bitow / 8;
     int pola_zaokr = (int) ceil(pola);
     char o_filename[100];
     //char buf[81920]; // -4 kB
@@ -50,7 +50,7 @@ short int zapisz_chunk()
 short int wczytaj_chunk_o_wspolrzednych(short int a, short int b) 
 {
     //zaokrąglenie w górę, ustala ilość bajtów w pliku
-    double pola = (double)labirynt._l_Pol_w_chunku*labirynt._l_Pol_w_chunku * 3 / 8;
+    double pola = (double)labirynt._l_Pol_w_chunku*labirynt._l_Pol_w_chunku * labirynt.l_bitow / 8;
     int pola_zaokr = (int) ceil(pola);
     char o_filename[100];
     //char buf[81920]; // -4 kB
@@ -77,13 +77,13 @@ short int wczytaj_chunk_o_wspolrzednych(short int a, short int b)
     return 0;
 }
 
-short int wczytaj_chunk_z_polem(Pole P, int rozmiar) 
+short int wczytaj_chunk_z_Polem(Pole P) 
 {
-    if(Pole_czy_istnieje(P)) return 60;
+    if(!Pole_czy_istnieje(P)) return 60;
     //zaokrąglenia w górę
-    double a_temp = (double)P.a/rozmiar; 
+    double a_temp = (double)P.a/labirynt._l_Pol_w_chunku ; 
     short int a = (short int) ceil(a_temp);
-    double b_temp = (double)P.b/rozmiar;
+    double b_temp = (double)P.b/labirynt._l_Pol_w_chunku ;
     short int b = (short int) ceil(b_temp);
     wczytaj_chunk_o_wspolrzednych(a, b);
     // double c_temp = (double)2/3;

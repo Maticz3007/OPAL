@@ -4,5 +4,5 @@
 short int wczytaj_chunk_o_wspolrzednych(short int a, short int b);
 void wyczysc_chunk();
 short int zapisz_chunk();
-short int wczytaj_chunk_z_polem(Pole P, int rozmiar);
+short int wczytaj_chunk_z_Polem(Pole P);
 #endif //UNTITLED_CHUNK_MANAGER_H

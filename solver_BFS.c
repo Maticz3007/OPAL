@@ -1,7 +1,7 @@
 #include "solver_BFS.h"
 
 //short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu); - musimy znac wymiary labiryntu, aby go podzielic i zainicjowac MazeStorage
-short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short int b, FILE * plik_wejsciowy) {
+short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short int b, char * plik_wejsciowy) {
     // a - liczba kolumn labiryntu, b - liczba wierszy labiryntu, plik_wejsciowy - plik do podzialu na chunki
 
     // Tymczasowy sposob podzialu (pewnie mozliwe sa wieksze chunki):
@@ -140,6 +140,7 @@ short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short i
     // Wystarczy ja teraz tylko przesledzic wstecznie przez modul solution_output
     nie_udalo_sie = Kolejka_zniszcz(&Q);
     if (nie_udalo_sie) return nie_udalo_sie; // byloby dziwne, gdyby kolejka zostala zniszczona wczesniej i wciaz jescze nie wyszlismy z funkcji
+    return 0;
 }
 
 //short int Pole_ustaw_czy_mozna_w_prawo(Pole P); - przeniesione do modulu maze_storage
