@@ -59,7 +59,7 @@ int main(int argc, char ** argv) {
         return -12;
     }
     //if(r_filepath==NULL) podaj_komunikat_bledu(-10);
-    char ext[5] = {};
+    char ext[5] = {0,0,0,0,0};
     char *extension = extension_reader(r_filepath);
     memcpy(ext, extension, 4);
     if(m_filepath != NULL)
@@ -96,7 +96,9 @@ int main(int argc, char ** argv) {
     
     //int jajo = rozwiaz_BFS(wej, wyj, 5, 5, maze_input);
     //rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short a, short b, char *plik_wejsciowy)
-    //_MazeStorage_wypisz(2);
+    _MazeStorage_wypisz(2);
+    fclose(maze_input);
+    //_zamknij_pliki_chunkow(1);
     //MazeStorage_inicjuj(3, 1, 5, 5, 1, 1);
     //podglad_bin(1,wynik.szerokosc, wynik.wysokosc,r_filepath);
     //podziel_labirynt(labirynt.l_bitow, 1, wynik.szerokosc, wynik.wysokosc,r_filepath);

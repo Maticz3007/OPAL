@@ -3,13 +3,15 @@
 //
 #include <stdio.h>
 #include "chunkenizer.h"
-//zasada działania: dzieli plik na chunki w formacie zbliżonym do przez CIebie podanego (bez spacji/newline) do plików tekstowych, 
+
+//FILE * pliki_chunkow[MAX_CHUNKI_PIERW+1][MAX_CHUNKI_PIERW+1];
+
+//zasada działania: dzieli plik na chunki w formacie podobnym do przechowywania pamięci struktury MazeStorage (bez spacji/newline) do plików tekstowych, 
 //następnie na podstawie danych z nich robi pliki binarne
 //wychodzi z tego tona malloca tylko i wyłącznie bo otwieranie/zamykanie plików z niego korzysta
 //a jednak nie! ponieważ fwrite
 //usun_chunki (delete_chunks ale nazwę zmienimy potem) może wybrać co kasuje -> docelowo usuniemy .txt po utworzeniu .bin, a .bin jak program się skończy
-short int podziel_labirynt(short int l_bitow, short int chunki , short int a, short int b, FILE * maze_input)
-{
+short int podziel_labirynt(short int l_bitow, short int chunki , short int a, short int b, FILE * maze_input) {
     //FILE * maze_input = fopen(plik_wejsciowy, "r");
     FILE * pliki[chunki];
     FILE * input;
@@ -26,10 +28,10 @@ short int podziel_labirynt(short int l_bitow, short int chunki , short int a, sh
     char buffer[buffer_size];
     int current_stream=0;
     int file_counter=0;
-    char t_filename[100];
+    char t_filename[MAX_SCIEZKA];
     int index=0;
     int output_value=0;
-    char o_filename[100];
+    char o_filename[MAX_SCIEZKA];
     //char buf[chunki+1][81920]={}; //bez tablicy 2D zapis się mocno psuł
     //setbuf(maze_input, buf[0]);
     if(a<b)
@@ -143,6 +145,8 @@ short int podziel_labirynt(short int l_bitow, short int chunki , short int a, sh
         }
         fseek(input, 0, SEEK_SET);
         output=fopen(o_filename, "wb");
+        //output=fopen(o_filename, "rb+");
+        //pliki_chunkow[i+1][j+1] = output; // Zapisujemy uchwyt na pozniej, zeby nie otwierac wielokrotnie plikow
         //setbuf(output, buf[0]);
         while((temp = fgetc(input)) != EOF)
         {
@@ -157,16 +161,17 @@ short int podziel_labirynt(short int l_bitow, short int chunki , short int a, sh
         }
         fwrite(&output_value, 1, 1, output);
         fclose(input);
-        fclose(output);           
+        fclose(output); //Pozniej zamkniemy, gdy chunki juz nie beda potrzebne       
+        //rewind(output); // Zamiast zamkniecia cofamy sie na poczatek 
         }
     }
     return rozmiar_chunka;
 }
 
 
-void delete_chunks_bin(short int chunki)
-{
-    char d_filename[100];
+void delete_chunks_bin(short int chunki) {
+    //_zamknij_pliki_chunkow(chunki);
+    char d_filename[MAX_SCIEZKA];
     for(int i=0; i<chunki; i++)
         for(int j=0; j<chunki; j++)
         {
@@ -174,9 +179,8 @@ void delete_chunks_bin(short int chunki)
             remove(d_filename);
         }
 }
-void delete_chunks_temp(short int chunki)
-{
-    char d_filename[100];
+void delete_chunks_temp(short int chunki) {
+    char d_filename[MAX_SCIEZKA];
     for(int i=0; i<chunki; i++)
         for(int j=0; j<chunki; j++)
         {
@@ -192,8 +196,7 @@ void delete_chunks_temp(short int chunki)
 //druga kroi plik na kawałki 
 //może są w nich jakieś memory leaki, ale nie będą one wykorzystywane w programie "docelowo"
 
-short int podglad_bin(short int chunki , short int a, short int b, char * plik_wejsciowy)
-{
+short int podglad_bin(short int chunki , short int a, short int b, char * plik_wejsciowy) {
     FILE * maze_input = fopen(plik_wejsciowy, "r");
     FILE * maze_output = fopen("test_full", "w");
     char temp;
@@ -247,8 +250,7 @@ short int podglad_bin(short int chunki , short int a, short int b, char * plik_w
     return 0;
 }
 
-short int podziel_tekstowy(short int chunki , short int a, short int b, char * plik_wejsciowy)
-{
+short int podziel_tekstowy(short int chunki , short int a, short int b, char * plik_wejsciowy) {
     //chunki w linii
     //jeśli chunki^2>rozmiar pliku, czasami robią się puste pliki
     FILE * maze_input = fopen(plik_wejsciowy, "r");
@@ -265,7 +267,7 @@ short int podziel_tekstowy(short int chunki , short int a, short int b, char * p
     }
 
     FILE * pliki[chunki];
-    char t_filename[100];
+    char t_filename[MAX_SCIEZKA];
     for(int i=0; i<chunki; i++)
     {
         sprintf(t_filename, "%s_%d.txt", "test", i);
@@ -331,3 +333,12 @@ short int podziel_tekstowy(short int chunki , short int a, short int b, char * p
         }
     return rozmiar_chunka;
 }
+
+/*void _zamknij_pliki_chunkow(short int chunki) {
+    short int i,j;
+    for (i = 0;i < chunki;i++) {
+        for (j = 0;j < chunki;j++) {
+            fclose(pliki_chunkow[i+1][j+1]); // Zamykamy wczesniej otwarte pliki
+        }
+    }
+}*/

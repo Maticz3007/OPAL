@@ -1,15 +1,8 @@
 #ifndef MAZE_STORAGE_IS_INCLUDED
 #define MAZE_STORAGE_IS_INCLUDED
 
+#include "config.h"
 #include<stdint.h> // uint8_t zajmujacy 1 bajt
-
-//#define MAX_MAZE_STORAGE 393217 // okolo, moze wiecej lub mniej aby przechowac caly labirynt na raz
-// 393217 * 8 == 3145736 > 3145728 == 1024*1024*3
-
-
-
-#define MAX_MAZE_STORAGE 98305 // jesli przyjmiemy ze chunk ma maksymalny rozmiar 512x512
-// 98305 * 8 == 786440 > 786432 == 512*512*3
 
 //#define MAX_MAZE_STORAGE 10000
 //#define MAX_MAZE_STORAGE 1
