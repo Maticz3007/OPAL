@@ -70,18 +70,21 @@ short int RLE_decompression(char * b_filename) {
     printf("Wartość separator: %c\n", separator);
     printf("Wartość wall: %c\n", wall);
     printf("Wartość path: %c\n", path);
-    FILE * test_output = fopen("C:\\Users\\Mateusz\\Desktop\\untitled\\maze_test.txt" , "w");
+    FILE * test_output = fopen("maze_binary_source.txt" , "w"); //tymczasowy filepath
 
     char value;
     int count;
     int file_x=0;
     int file_y=1;
 
-    for(int i=0; i<counter; i++)  //na razie nie sprawdzam pliku pod kątem błędów
+    for(int i=0; i<counter; i++)
     {
-        fseek(binary_input, 1, SEEK_CUR);   //pomijam separator
         fread(&buffer, 1, 1, binary_input);
         value = buffer;
+        if(value!=separator) return -100;
+        fread(&buffer, 1, 1, binary_input);
+        value = buffer;
+        if(value!=wall && value!=path)  return -101;
         fread(&buffer, 1, 1, binary_input);
         count = buffer;
        for(int j=-1; j<count; j++)
@@ -106,6 +109,6 @@ short int RLE_decompression(char * b_filename) {
 
     fclose(binary_input);
     fclose(test_output);
-    return 222;
+    return 0;
 
 }
