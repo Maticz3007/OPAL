@@ -6,7 +6,9 @@
 //#define MAX_MAZE_STORAGE 393217 // okolo, moze wiecej lub mniej aby przechowac caly labirynt na raz
 // 393217 * 8 == 3145736 > 3145728 == 1024*1024*3
 
-#define MAX_MAZE_STORAGE 98305// jesli przyjmiemy ze chunk ma maksymalny rozmiar 512x512
+
+
+#define MAX_MAZE_STORAGE 98305 // jesli przyjmiemy ze chunk ma maksymalny rozmiar 512x512
 // 98305 * 8 == 786440 > 786432 == 512*512*3
 
 //#define MAX_MAZE_STORAGE 10000
@@ -24,10 +26,14 @@ typedef struct {
     short int b;
     short int chunk_a;
     short int chunk_b;
-    uint8_t chunk[MAX_MAZE_STORAGE];
+    uint8_t chunk[MAX_MAZE_STORAGE]; // pojedynczy chunk labiryntu
     // na potrzeby implementacji:
     short int _l_Pol_w_chunku; // ustawiane przez MazeStorage_inicjuj
 } MazeStorage;
+
+// MazeStorage przechowuje pojedynczy chunk labiryntu w MazeStorage.chunk
+
+
 // Pierwsze Pole całego labiryntu ma wspolrzedne (1,1), a ostatnie (MazeStorage.a,MazeStorage.b)
 // Pierwszy chunk ma wspolrzedne (1,1), a ostatni (MazeStorage.l_chunkow, MazeStorage.l_chunkow)
 

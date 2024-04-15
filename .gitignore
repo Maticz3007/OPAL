@@ -1,3 +1,9 @@
-# Project exclude paths
-/cmake-build-debug/
-/cmake-build-debug-wsl/
+
+# Skopiowane pliki:
+queue_BFS_v1/maze_storage.h
+queue_BFS_v1/config.h
+queue_BFS_v2/maze_storage.h
+queue_BFS_v2/config.h
+# Smieci:
+maze_storage_tester.out
+massif.out
