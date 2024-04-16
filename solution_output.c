@@ -7,7 +7,7 @@ short int wypisz_liste_krokow(FILE * plik_wejsciowy, FILE * plik_wyjsciowy, shor
     short int nie_udalo_sie;
     unsigned int dl_sciezki = _sprawdz_dlugosc_sciezki(wejscie, wyjscie);
     if (dl_sciezki == 0) return 435; // Sciezka nie istnieje!
-    printf("Dlugosc sciezki (bez Pola wejscia) wyniosla %i.\n",dl_sciezki);
+    //printf("Dlugosc sciezki (bez Pola wejscia) wyniosla %i.\n",dl_sciezki);
     switch (tryb) {
         case 0:
             nie_udalo_sie = _wypisz_liste_krokow_tekstowo(plik_wyjsciowy, wejscie, wyjscie);
@@ -33,8 +33,8 @@ unsigned int _sprawdz_dlugosc_sciezki(Pole wejscie, Pole wyjscie) {
     short int nie_udalo_sie;
     Pole PoleD; // PolePoprzednie, PoleDoszlismy
     Pole * PoleD_G = &PoleD;
-    Pole przy_wejsciu = _zwroc_Pole_przy_skrajnym_Polu(wejscie);
-    Pole przy_wyjsciu = _zwroc_Pole_przy_skrajnym_Polu(wyjscie);
+    Pole przy_wejsciu = zwroc_Pole_przy_skrajnym_Polu(wejscie);
+    Pole przy_wyjsciu = zwroc_Pole_przy_skrajnym_Polu(wyjscie);
     unsigned int calkowita_sciezka = 0; // aktualna sciezka;
     PoleD = przy_wejsciu;
     while (PoleD.a != przy_wyjsciu.a || PoleD.b != przy_wyjsciu.b) {
@@ -66,8 +66,8 @@ unsigned int _sprawdz_dlugosc_sciezki(Pole wejscie, Pole wyjscie) {
 short int _wypisz_liste_krokow_tekstowo(FILE * plik_wyjsciowy, Pole wejscie, Pole wyjscie) {
     short int nie_udalo_sie;
     Pole PoleP, PoleD; // PolePoprzednie, PoleDoszlismy
-    Pole przy_wejsciu = _zwroc_Pole_przy_skrajnym_Polu(wejscie);
-    Pole przy_wyjsciu = _zwroc_Pole_przy_skrajnym_Polu(wyjscie);
+    Pole przy_wejsciu = zwroc_Pole_przy_skrajnym_Polu(wejscie);
+    Pole przy_wyjsciu = zwroc_Pole_przy_skrajnym_Polu(wyjscie);
     short int akt_d = 0; // aktualna sciezka TYLKO w 1 kierunku
     // akt_d nie moze przekroczyc max(labirynt.a, labirynt.b)
     uint8_t poprzedni_kierunek, nowy_kierunek;short int wzglednosc_kierunkow;
@@ -153,7 +153,7 @@ short int _wypisz_liste_krokow_binarnie(FILE * plik_wyjsciowy, Pole wejscie, Pol
     return 14312;
 } // Jeszcze nie zaimplementowane
 
-Pole _zwroc_Pole_przy_skrajnym_Polu(Pole skrajne) {
+Pole zwroc_Pole_przy_skrajnym_Polu(Pole skrajne) {
     if (skrajne.a == 0) skrajne.a++;
     else if (skrajne.b == 0) skrajne.b++;
     else if (skrajne.a > skrajne.b) skrajne.a--;

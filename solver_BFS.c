@@ -17,6 +17,7 @@ short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short i
     else if (512 < max_a_b && max_a_b <= 1024) l_chunkow = 2;
     else if (1024 < max_a_b && max_a_b <= 1536) l_chunkow = 3;
     else return 777; // jeszcze nie wspierane!
+    //l_chunkow = 1;
     // Ta wersja algorytmu rozwiazujacego wykorzystuje 3 bity na Pole
     MazeStorage_inicjuj(3, l_chunkow, a, b, 1, 1); // na pewno chunk (1,1) istnieje
     podziel_labirynt(3, l_chunkow, a, b, plik_wejsciowy);

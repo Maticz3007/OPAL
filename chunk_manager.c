@@ -77,6 +77,7 @@ short int wczytaj_chunk_o_wspolrzednych(short int a, short int b) {
         fread(&temp, 1, 1, chunk);
         labirynt.chunk[i]=temp;
     }
+    labirynt.chunk_a = a;labirynt.chunk_b = b;
     fclose(chunk); //Jeszcze nie zamykamy
     //rewind(chunk); // Zamiast tego cofamy sie na poczatek
     //wyczysc_chunk();

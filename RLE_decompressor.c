@@ -7,17 +7,17 @@
 
 short int RLE_decompression(char * b_filename) {
     int buffer;
-    int file_id;
-    char escape;
+    //int file_id;
+    //char escape;
     short int columns;
-    short int lines;
+    //short int lines;
     short int entry_x;
     short int entry_y;
     short int exit_x;
     short int exit_y;
     //reserved 12 bajtów
     int counter;
-    int solution_offset;
+    //int solution_offset;
     char separator;
     char wall;
     char path;
@@ -30,13 +30,13 @@ short int RLE_decompression(char * b_filename) {
     }
 
     fread(&buffer, 4, 1, binary_input);
-    file_id = buffer;
+    //file_id = buffer;
     fread(&buffer, 1, 1, binary_input);
-    escape = buffer;
+    //escape = buffer;
     fread(&buffer, 2, 1, binary_input);
     columns = buffer;
     fread(&buffer, 2, 1, binary_input);
-    lines = buffer;
+    //lines = buffer;
     fread(&buffer, 2, 1, binary_input);
     entry_x = buffer;
     fread(&buffer, 2, 1, binary_input);
@@ -49,7 +49,7 @@ short int RLE_decompression(char * b_filename) {
     fread(&buffer, 4, 1, binary_input);
     counter = buffer;
     fread(&buffer, 4, 1, binary_input);
-    solution_offset = buffer;
+    //solution_offset = buffer;
     fread(&buffer, 1, 1, binary_input);
     separator = buffer;
     fread(&buffer, 1, 1, binary_input);

@@ -60,7 +60,7 @@ int main(int argc, char ** argv) {
         }
     if(help_flag)
     {
-        printf("tutaj będzie jakaś pomoc");
+        printf("Program rozwiązuje labirynt o wymiarach do 1024x1024. Wywołaj go z argumentem -r <nazwa_pliku>, aby wczytać labirynt z pliku tekstowego lub binarnego. Możesz podać argument -m <nazwa_pliku>, aby lista kroków została do niego przekazana.\n");
         return -12;
     }
     if (r_filepath == NULL) {
@@ -88,9 +88,6 @@ int main(int argc, char ** argv) {
     error_flag = sprawdz_dostep_do_odczytu(r_filepath);
     podaj_komunikat_bledu(error_flag);
     wynik = sprawdz_format_labiryntu(r_filepath);
-    
-    //delete_chunks_bin(5);
-    //delete_chunks_temp(5);
     Pole wej;
     Pole wyj;
     wej.a=wynik.x_poczatek;
@@ -98,11 +95,14 @@ int main(int argc, char ** argv) {
     wyj.a=wynik.x_koniec;
     wyj.b=wynik.y_koniec;
     FILE * maze_input = fopen(r_filepath, "r");
-    error_flag = rozwiaz_BFS(_zwroc_Pole_przy_skrajnym_Polu(wej), _zwroc_Pole_przy_skrajnym_Polu(wyj), wynik.szerokosc, wynik.wysokosc, maze_input);
+    error_flag = rozwiaz_BFS(zwroc_Pole_przy_skrajnym_Polu(wej), zwroc_Pole_przy_skrajnym_Polu(wyj), wynik.szerokosc, wynik.wysokosc, maze_input);
     rewind(maze_input);
     podaj_komunikat_bledu(error_flag);
     if (m_filepath == NULL) {
-        wypisz_liste_krokow(maze_input, stdout, 0, wej, wyj);
+        if (wypisz_liste_krokow(maze_input, stdout, 0, wej, wyj) != 0) {
+            fprintf(stderr, "Nie znaleziono ścieżki od wejścia do wyjścia.\n");
+        }
+        //printf("wypisz_liste_krokow: %i\n", wypisz_liste_krokow(maze_input, stdout, 0, wej, wyj));
     } else {
         FILE * plik_wyjsciowy = fopen(m_filepath, "w");
         wypisz_liste_krokow(maze_input, plik_wyjsciowy, 0, wej, wyj);
@@ -112,7 +112,7 @@ int main(int argc, char ** argv) {
     
     //int jajo = rozwiaz_BFS(wej, wyj, 5, 5, maze_input);
     //rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short a, short b, char *plik_wejsciowy)
-    _MazeStorage_wypisz(2);
+    //_MazeStorage_wypisz(2);
     fclose(maze_input);
     //_zamknij_pliki_chunkow(1);
     //MazeStorage_inicjuj(3, 1, 5, 5, 1, 1);
@@ -123,5 +123,7 @@ int main(int argc, char ** argv) {
     // for(int i=0; i<98305; i++)
     // printf("%x ", labirynt.chunk[i]);
     //printf("%d\n", jajo);
+    delete_chunks_bin(MAX_CHUNKI_PIERW);
+    delete_chunks_temp(MAX_CHUNKI_PIERW);
     remove("maze_binary_source.txt");
 }

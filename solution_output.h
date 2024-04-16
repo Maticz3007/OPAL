@@ -39,7 +39,7 @@ short int _przejdz_do_sekcji_naglowkowej_rozwiazania(FILE * plik_wejsciowy);
 short int _wypisz_liste_krokow_binarnie(FILE * plik_wyjsciowy, Pole wejscie, Pole wyjscie);
 
 // Zwraca Pole niebedace czescia ramki labiryntu najblizsze Polu skrajnemu (bedacemu czescia ramki labiryntu)
-Pole _zwroc_Pole_przy_skrajnym_Polu(Pole skrajne);
+Pole zwroc_Pole_przy_skrajnym_Polu(Pole skrajne);
 
 // Zwraca kierunek (uint8_t) jaki nalezy przejsc z Pola P1, aby dostac sie do sasiedniego Pola P2
 // 01001110 (znak 'N')  - w gore
