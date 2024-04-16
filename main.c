@@ -1,6 +1,6 @@
 #include <ctype.h>
 #include <stdio.h>
-#include <stdlib.h>
+//#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include "error_messages.h"
@@ -57,6 +57,10 @@ int main(int argc, char ** argv) {
     {
         printf("tutaj będzie jakaś pomoc");
         return -12;
+    }
+    if (r_filepath == NULL) {
+        printf("W celu zapoznania się z działaniem programu, uruchom go z argumentem -h.\n");
+        return -10;
     }
     //if(r_filepath==NULL) podaj_komunikat_bledu(-10);
     char ext[5] = {0,0,0,0,0};

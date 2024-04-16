@@ -7,7 +7,7 @@ void podaj_komunikat_bledu(short int kod_bledu)
     {
         case -10:
         fprintf(stderr, "W celu zapoznania się z działaniem programu, uruchom go z argumentem -h");
-        printf(":huh");
+        //printf(":huh");
         break;
         case -11:
         fprintf(stderr, "Podano nieprawidłowe argumenty. W celu zapoznania się z działaniem programu, uruchom go z argumentem -h");
@@ -116,5 +116,8 @@ void podaj_komunikat_bledu(short int kod_bledu)
         // fprintf(stderr, );
         // break;
     }
-    if(kod_bledu!=0) exit(kod_bledu);
+    if(kod_bledu!=0) {
+        putc('\n',stderr);
+        exit(kod_bledu);
+    }
 }
