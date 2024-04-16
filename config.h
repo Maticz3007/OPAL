@@ -3,9 +3,10 @@
 
 #define MAX_SCIEZKA 500 // zakladamy, ze dlugosc sciezki do pliku nie przekroczy 500 znakow (tylko dla Windowsa)
 
-#define MAX_CHUNKI_PIERW 3 // w sumie max 9 chunkow
+//#define MAX_CHUNKI_PIERW 3 // w sumie max 9 chunkow
+#define MAX_CHUNKI_PIERW 1
 
-#define MAX_A_B 1024 // maksimum z mozliwych wymiarow labiryntu - max(a,b). Najlepiej, aby ta liczba byla podzielna przez MAX_A_B
+#define MAX_A_B 1024 // maksimum z mozliwych wymiarow labiryntu - max(a,b).
 
 #define MAX_MAZE_STORAGE 393217 // okolo, moze wiecej lub mniej aby przechowac caly labirynt na raz
 // 393217 * 8 == 3145736 > 3145728 == 1024*1024*3

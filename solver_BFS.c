@@ -5,19 +5,17 @@
 short int rozwiaz_BFS(Pole przy_wejsciu, Pole przy_wyjsciu, short int a, short int b, FILE * plik_wejsciowy) {
     // a - liczba kolumn labiryntu, b - liczba wierszy labiryntu, plik_wejsciowy - plik do podzialu na chunki
 
-    // Tymczasowy sposob podzialu (pewnie mozliwe sa wieksze chunki):
-    // jesli max(a,b) <= 512 : podziel na 1 chunk
-    // jesli 512 < max(a,b) <= 1024 : podziel na 4 chunki
-    // jesli 1024 < max(a,b) <= 1536 : podziel na 9 chunkow
-    // na razie wiekszych nie wspieramy
+    // Powinien wystarczyc 1 chunk i zmiescic sie w pamieci (w zaleznosci od tego jak ja liczyc, nie mamy wplywu na pewna czesc zaalokowanej pamieci).
     
-    short int max_a_b = a;short int l_chunkow; // l_chunkow to pierwiastek z liczby chunkow
+    short int max_a_b = a;
+    short int l_chunkow; // l_chunkow to pierwiastek z liczby chunkow
     if (b > max_a_b) max_a_b = b;
-    if (max_a_b <= 512) l_chunkow = 1;
+    /*if (max_a_b <= 512) l_chunkow = 1;
     else if (512 < max_a_b && max_a_b <= 1024) l_chunkow = 2;
     else if (1024 < max_a_b && max_a_b <= 1536) l_chunkow = 3;
-    else return 777; // jeszcze nie wspierane!
-    //l_chunkow = 1;
+    else return 777; // jeszcze nie wspierane!*/
+    if (max_a_b > MAX_A_B) return 777; // jeszcze nie wspierane!
+    l_chunkow = 1;
     // Ta wersja algorytmu rozwiazujacego wykorzystuje 3 bity na Pole
     MazeStorage_inicjuj(3, l_chunkow, a, b, 1, 1); // na pewno chunk (1,1) istnieje
     podziel_labirynt(3, l_chunkow, a, b, plik_wejsciowy);

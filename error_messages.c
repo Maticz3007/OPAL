@@ -110,6 +110,9 @@ void podaj_komunikat_bledu(short int kod_bledu)
         break;
         case 0:
         break;
+        case 777:
+        fprintf(stderr, "Podano niewspierane przez program wymiay labiryntu.");
+        break;
         default:
         fprintf(stderr, "Wystąpił błąd: %d", kod_bledu);
         // case :

@@ -4,9 +4,6 @@
 #include <stdio.h>
 #include "file_check.h"
 
-
-
-
 short int sprawdz_dostep_do_odczytu(char * plik_wejsciowy)
 {
     FILE * maze_input = fopen(plik_wejsciowy, "r");
