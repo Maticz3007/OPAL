@@ -56,7 +56,7 @@ short int RLE_decompression(char * b_filename) {
     wall = buffer;
     fread(&buffer, 1, 1, binary_input);
     path = buffer;
-
+    /*
     printf("Wartość file_id (hex): %x\n", file_id);
     printf("Wartość escape (hex): %x\n", escape);
     printf("Wartość columns: %d\n", columns);
@@ -70,6 +70,7 @@ short int RLE_decompression(char * b_filename) {
     printf("Wartość separator: %c\n", separator);
     printf("Wartość wall: %c\n", wall);
     printf("Wartość path: %c\n", path);
+    */
     FILE * test_output = fopen("maze_binary_source.txt" , "w"); //tymczasowy filepath
 
     char value;

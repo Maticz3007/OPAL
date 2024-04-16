@@ -110,7 +110,7 @@ short int Kolejka_zrzuc(Kolejka * Q, KolejkaElement * zwrocony_element) {
 }
 
 short int _Kolejka_przepisz(Kolejka * Q) {
-    printf("Przechodzimy w tryb 1!\n"); // DEBUG żeby można było zobaczyć kiedy zacznie spadać wydajność
+    //printf("Przechodzimy w tryb 1!\n"); // DEBUG żeby można było zobaczyć kiedy zacznie spadać wydajność
     unsigned short int lel_tryb_0 = Q->lel;
     unsigned short int lel_tryb_1 = lel_tryb_0;
     short int nie_udalo_sie;

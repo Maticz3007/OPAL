@@ -5,6 +5,7 @@ MazeStorage labirynt;
 
 void Pole_wypisz(Pole P) {
     printf("(%i, %i)",P.a,P.b);
+    return;
 }
 
 short int Pole_czy_istnieje(Pole P) {

@@ -18,7 +18,7 @@ short int sprawdz_dostep_do_odczytu(char * plik_wejsciowy)
 
 short int sprawdz_dostep_do_zapisu(char * plik_wyjsciowy)
 {
-    FILE * maze_output = fopen(plik_wyjsciowy, "r");
+    FILE * maze_output = fopen(plik_wyjsciowy, "w");
     if(maze_output==NULL) return 20;
     fclose(maze_output);
     return 0;
@@ -90,15 +90,39 @@ WynikLabiryntu sprawdz_format_labiryntu(char * plik_wejsciowy)
        ((wynik.x_poczatek==1 || wynik.x_poczatek==wynik.szerokosc) && (wynik.y_poczatek==1 || wynik.y_poczatek==wynik.wysokosc ))) wynik.kod_bledu=34;
     if((wynik.x_koniec!=1 && wynik.x_koniec!=wynik.szerokosc && wynik.y_koniec!=1 && wynik.y_koniec!=wynik.szerokosc) ||
         ((wynik.x_koniec==1 || wynik.x_koniec==wynik.szerokosc) && (wynik.y_koniec==1 || wynik.y_koniec==wynik.wysokosc ))) wynik.kod_bledu= 35;
+    //printf ("poczatek (%i,%i) koniec (%i,%i)\n", wynik.x_poczatek, wynik.y_poczatek, wynik.x_koniec, wynik.y_koniec);
+    if (wynik.x_poczatek == 1) {
+        wynik.x_poczatek--;
+        wynik.y_poczatek /= 2;
+    }
+    else {
+        wynik.x_poczatek /= 2;
+        wynik.y_poczatek--;
+    }
+    if (wynik.x_koniec == 1) {
+        wynik.x_koniec--;
+        wynik.y_koniec /= 2;wynik.y_koniec++;
+    }
+    else {
+        wynik.x_koniec /= 2;wynik.x_koniec++;
+        wynik.y_koniec /= 2;//wynik.y_koniec++;
+    }
+    //printf ("poczatek (%i,%i) koniec (%i,%i)\n", wynik.x_poczatek, wynik.y_poczatek, wynik.x_koniec, wynik.y_koniec);
     wynik.szerokosc/=2;
     wynik.wysokosc/=2;
-    wynik.x_koniec/=2;
+    /*wynik.x_koniec/=2;
     wynik.y_koniec/=2;
-    wynik.x_poczatek=wynik.x_poczatek/2+1;
-    wynik.y_poczatek/=2;
-    printf("P: %d, %d\n", wynik.x_poczatek, wynik.y_poczatek); //kolumna, wiersz
-    printf("K: %d, %d\n", wynik.x_koniec, wynik.y_koniec);
-    printf("Rozmiary pliku: %d, %d\n", wynik.szerokosc, wynik.wysokosc);
+    wynik.x_poczatek=wynik.x_poczatek/2;
+    //wynik.x_poczatek=wynik.x_poczatek/2+1;
+    wynik.y_poczatek/=2;*/
+    /*if (wynik.x_poczatek != 0) wynik.x_poczatek++;
+    else if (wynik.y_poczatek != 0) wynik.y_poczatek++;
+    if (wynik.x_koniec != 0) wynik.x_koniec++;
+    else if (wynik.y_koniec != 0) wynik.y_koniec++;*/
+    //printf ("poczatek (%i,%i) koniec (%i,%i)\n", wynik.x_poczatek, wynik.y_poczatek, wynik.x_koniec, wynik.y_koniec);
+    //printf("P: %d, %d\n", wynik.x_poczatek, wynik.y_poczatek); //kolumna, wiersz
+    //printf("K: %d, %d\n", wynik.x_koniec, wynik.y_koniec);
+    //printf("Rozmiary pliku: %d, %d\n", wynik.szerokosc, wynik.wysokosc);
     fclose(maze_input);
     return wynik;
 }

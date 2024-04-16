@@ -8,6 +8,7 @@
 #include "RLE_decompressor.h"
 #include "maze_storage.h"
 #include "solver_BFS.h"
+#include "solution_output.h"
 
 char * extension_reader(const char *s)
 {
@@ -16,6 +17,10 @@ char * extension_reader(const char *s)
 }
 
 int main(int argc, char ** argv) {
+    /*int sumaryczna_pamiec = 0;
+    sumaryczna_pamiec += (int)sizeof(MazeStorage);printf("MazeStorage: %i\n",(int)sizeof(MazeStorage));
+    sumaryczna_pamiec += (int)sizeof(Kolejka);printf("Kolejka: %i\n",(int)sizeof(Kolejka));
+    printf("Suma: %i\n",sumaryczna_pamiec);*/
     WynikLabiryntu wynik;
     char * m_filepath = NULL;
     char * r_filepath = NULL;
@@ -83,7 +88,7 @@ int main(int argc, char ** argv) {
     error_flag = sprawdz_dostep_do_odczytu(r_filepath);
     podaj_komunikat_bledu(error_flag);
     wynik = sprawdz_format_labiryntu(r_filepath);
-    FILE * maze_input = fopen(r_filepath, "r");
+    
     //delete_chunks_bin(5);
     //delete_chunks_temp(5);
     Pole wej;
@@ -92,10 +97,17 @@ int main(int argc, char ** argv) {
     wej.b=wynik.y_poczatek;
     wyj.a=wynik.x_koniec;
     wyj.b=wynik.y_koniec;
-
-    error_flag = rozwiaz_BFS(wej, wyj, wynik.szerokosc, wynik.wysokosc, maze_input);
+    FILE * maze_input = fopen(r_filepath, "r");
+    error_flag = rozwiaz_BFS(_zwroc_Pole_przy_skrajnym_Polu(wej), _zwroc_Pole_przy_skrajnym_Polu(wyj), wynik.szerokosc, wynik.wysokosc, maze_input);
+    rewind(maze_input);
     podaj_komunikat_bledu(error_flag);
-
+    if (m_filepath == NULL) {
+        wypisz_liste_krokow(maze_input, stdout, 0, wej, wyj);
+    } else {
+        FILE * plik_wyjsciowy = fopen(m_filepath, "w");
+        wypisz_liste_krokow(maze_input, plik_wyjsciowy, 0, wej, wyj);
+        fclose(plik_wyjsciowy);
+    }
     //można niby dać podaj_komunikat_bledu(rozwiaz_BFS(wej, wyj, wynik.szerokosc, wynik.wysokosc, maze_input));
     
     //int jajo = rozwiaz_BFS(wej, wyj, 5, 5, maze_input);
